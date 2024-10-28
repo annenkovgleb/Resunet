@@ -11,7 +11,6 @@ namespace Resunet.BL.Auth
         private readonly IEncrypt encrypt;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-
         public AuthBL(IAuthDAL authDal, IEncrypt encrypt,
             IHttpContextAccessor httpContextAccessor)
         {

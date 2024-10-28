@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Resunet.BL.Auth
 {
-	public class Encrypt : IEncrypt
-	{
+    public class Encrypt : IEncrypt
+    {
         public string HashPassword(string password, string salt)
         {
             return Convert.ToBase64String(KeyDerivation.Pbkdf2(

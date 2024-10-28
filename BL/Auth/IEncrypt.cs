@@ -1,5 +1,4 @@
-﻿using System;
-namespace Resunet.BL.Auth
+﻿namespace Resunet.BL.Auth
 {
 	public interface IEncrypt
 	{
