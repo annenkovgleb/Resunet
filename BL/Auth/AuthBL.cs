@@ -10,13 +10,17 @@ namespace Resunet.BL.Auth
         private readonly IAuthDAL authDal;
         private readonly IEncrypt encrypt;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IDbSession dbSession;
 
-        public AuthBL(IAuthDAL authDal, IEncrypt encrypt,
-            IHttpContextAccessor httpContextAccessor)
+        public AuthBL(IAuthDAL authDal, 
+            IEncrypt encrypt,
+            IHttpContextAccessor httpContextAccessor, 
+            IDbSession dbSession)
         {
             this.authDal = authDal;
             this.encrypt = encrypt;
             this.httpContextAccessor = httpContextAccessor;
+            this.dbSession = dbSession;
         }
 
         public async Task<int> CreateUser(UserModel user)
@@ -29,26 +33,18 @@ namespace Resunet.BL.Auth
             return id;
         }
 
-        // log in and remember user in system  
-        public void Login(int id)
+        public async Task Login(int id)
         {
-            // if session has userid and we know his id - it means, that user authorised 
-            httpContextAccessor.HttpContext?.Session.SetInt32(AuthConstants.AUTH_SESSION_PARAM_NAME, id);
+            await dbSession.SetUserId(id);
         }
 
         public async Task<int> Authenticate(string email, string password, bool rememberMe)
         {
-            // если пользователь авторизован, то вернуть id иначе 0
             var user = await authDal.GetUser(email);
-
-            // кейсы которые нужно проверять: 
-            // 1. пользователь не найден
-            // 2. пользователь найден, но пароль неверный
-            // 3. пользователь найден и пароль верный
 
             if (user.UserId != null && user.Password == encrypt.HashPassword(password, user.Salt))
             {
-                Login(user.UserId ?? 0);
+                await Login(user.UserId ?? 0);
                 return user.UserId ?? 0;
             }
             throw new AuthorizationException();

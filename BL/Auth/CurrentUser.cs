@@ -1,21 +1,22 @@
 ﻿using System;
 namespace Resunet.BL.Auth
 {
-	public class CurrentUser: ICurrentUser
-	{
-        // httpContextAccessor - для доступа к сессии 
-        private readonly IHttpContextAccessor httpContextAccessor;
+    public class CurrentUser : ICurrentUser
+    {
+        private readonly IHttpContextAccessor httpContextAccessor; // для доступа к сессии 
+        private readonly IDbSession dbSession;
 
-        public CurrentUser(IHttpContextAccessor httpContextAccessor)
-		{
-			this.httpContextAccessor = httpContextAccessor;
+        public CurrentUser(
+            IHttpContextAccessor httpContextAccessor,
+            IDbSession dbSession)
+        {
+            this.httpContextAccessor = httpContextAccessor;
+            this.dbSession = dbSession;
         }
 
-		public bool IsLoggedIn()
-		{
-            // проверяем на userid, если user сохраняется в сессии => он авторизован  
-            int? id = httpContextAccessor.HttpContext?.Session.GetInt32(AuthConstants.AUTH_SESSION_PARAM_NAME);
-			return id != null;
+        public async Task<bool> IsLoggedIn()
+        {
+            return await dbSession.IsLoggedIn();
         }
     }
 }

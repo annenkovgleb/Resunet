@@ -11,7 +11,7 @@ namespace Resunet.DAL
             using (var connection = new NpgsqlConnection(DbHelper.ConnString))
             {
                 await connection.OpenAsync();
-                string sql = @"insert into DbSession (DbSessionId, SessionData, Created, LastAccess, UserId from DbSession where DbSessionId)";
+                string sql = @"insert into DbSession (DbSessionId, SessionData, Created, LastAccess, UserId from DbSession where DbSessionId = @sessionId)";
 
                 var sessions = await connection.QueryAsync<SessionModel>(sql);
                 return sessions.FirstOrDefault();
