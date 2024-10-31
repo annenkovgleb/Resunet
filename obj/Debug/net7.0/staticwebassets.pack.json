@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "V:\\Project\\dotnet\\Resunet\\Resunet\\wwwroot\\images\\FB\\FB10\\Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg",
+      "PackagePath": "staticwebassets\\images\\FB\\FB10\\Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg"
+    },
+    {
       "Id": "V:\\Project\\dotnet\\Resunet\\Resunet\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

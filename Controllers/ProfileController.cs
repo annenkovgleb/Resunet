@@ -39,7 +39,6 @@ namespace Resunet.Controllers
 
                 // в средину можно добавить какую-то уникальность для названия файла
                 filename = directory + "/" + imageData.FileName;
-
                 using (var stream = System.IO.File.Create(filename))
                     await imageData.CopyToAsync(stream);
             }
