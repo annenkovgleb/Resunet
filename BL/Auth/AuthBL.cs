@@ -16,6 +16,11 @@ namespace Resunet.BL.Auth
             IEncrypt encrypt,
             IHttpContextAccessor httpContextAccessor, 
             IDbSession dbSession)
+        /* IDbSession dbSession - получает BL уровня сессию, а AuthBL должен работь 
+         * пожизненно сохранили объект, который должен умиреть после каждого 
+         * запроса в объекте, который должен жить вечно - нельзя так :)
+         * если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
+         */
         {
             this.authDal = authDal;
             this.encrypt = encrypt;
@@ -29,7 +34,7 @@ namespace Resunet.BL.Auth
             user.Password = encrypt.HashPassword(user.Password, user.Salt);
 
             int id = await authDal.CreateUser(user);
-            Login(id);
+            await Login(id);
             return id;
         }
 

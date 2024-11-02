@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Resunet.BL.Auth;
+
 namespace Resunet.BL.Auth
 {
     public class CurrentUser : ICurrentUser
     {
-        private readonly IHttpContextAccessor httpContextAccessor; // для доступа к сессии 
+        private readonly IHttpContextAccessor httpContextAccessor; // доступ к сессии 
         private readonly IDbSession dbSession;
 
         public CurrentUser(
@@ -20,4 +21,3 @@ namespace Resunet.BL.Auth
         }
     }
 }
-

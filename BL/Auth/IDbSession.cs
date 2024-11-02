@@ -10,6 +10,6 @@ namespace Resunet.BL.Auth
 
         Task<int?> GetUserId();
         
-        Task<int> IsLoggedIn();
+        Task<bool> IsLoggedIn();
     }
 }
