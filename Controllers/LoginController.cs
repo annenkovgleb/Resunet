@@ -6,9 +6,9 @@ namespace Resunet.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IAuthBL authBl;
+        private readonly IAuth authBl;
 
-        public LoginController(IAuthBL authBl)
+        public LoginController(IAuth authBl)
         {
             this.authBl = authBl;
         }

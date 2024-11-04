@@ -5,14 +5,15 @@ using Resunet.BL;
 
 namespace Resunet.BL.Auth
 {
-    public class AuthBL : IAuthBL
+    // Bl уровень
+    public class Auth : IAuth
     {
         private readonly IAuthDAL authDal;
         private readonly IEncrypt encrypt;
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IDbSession dbSession;
 
-        public AuthBL(IAuthDAL authDal, 
+        public Auth(IAuthDAL authDal, 
             IEncrypt encrypt,
             IHttpContextAccessor httpContextAccessor, 
             IDbSession dbSession)

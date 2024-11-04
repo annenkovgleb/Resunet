@@ -20,8 +20,7 @@ namespace Resunet.BL.Auth
             options.Path = "/";
             options.HttpOnly = true;
             options.Secure = true;
-            httpContextAccessor?.HttpContext?.Response.Cookies.Delete(
-                AuthConstants.SessionCookieName);
+            httpContextAccessor?.HttpContext?.Response.Cookies.Delete(AuthConstants.SessionCookieName);
             httpContextAccessor?.HttpContext?.Response.Cookies.Append(
                 AuthConstants.SessionCookieName, sessionid.ToString(), options);
         }
@@ -35,7 +34,7 @@ namespace Resunet.BL.Auth
                 LastAccessed = DateTime.Now
             };
 
-            await sessionDAL.CreateSession(data);
+            await sessionDAL.Create(data);
             return data;
         }
 
@@ -54,7 +53,7 @@ namespace Resunet.BL.Auth
             else
                 sessionId = Guid.NewGuid();
 
-            var data = await this.sessionDAL.GetSession(sessionId); 
+            var data = await this.sessionDAL.Get(sessionId); 
             if (data == null)
             {
                 data = await this.CreateSession();
@@ -70,7 +69,7 @@ namespace Resunet.BL.Auth
             data.UserId = userId;
             data.DbSessionId = Guid.NewGuid(); // новая сессия
             CreateSessionCookie(data.DbSessionId); 
-            return await sessionDAL.CreateSession(data);
+            return await sessionDAL.Create(data);
         }
 
         public async Task<int?> GetUserId()
