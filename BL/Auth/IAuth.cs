@@ -1,15 +1,18 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Resunet.DAL.Models;
 
 namespace Resunet.BL.Auth
 {
-	public interface IAuth
-	{
-		Task<int> CreateUser(Resunet.DAL.Models.UserModel user);
+    public interface IAuth
+    {
+        Task<int> CreateUser(Resunet.DAL.Models.UserModel user);
 
-		Task<int> Authenticate(string email, string password, bool rememberMe);
+        Task<int> Authenticate(string email, string password, bool rememberMe);
 
-		Task<ValidationResult?> ValidateEmail(string email);
+        Task ValidateEmail(string email);
+        
+        Task Register(UserModel user);
     }
 }
 

@@ -3,6 +3,7 @@ using Resunet.BL.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Resunet.ViewModels;
 using Resunet.ViewMapper;
+using Resunet.BL;
 
 // ничего не знает о DAL уровне, его прерогатива работать только с BL уровнем
 
@@ -28,26 +29,24 @@ namespace Resunet.Controllers
         [Route("/register")]
         public async Task<IActionResult> IndexSave(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                // если какой-то косяк с Email, то скипаем
-                var errorModel = await authBl.ValidateEmail(model.Email ?? "");
-                if (errorModel != null)
-                {
-                    ModelState.TryAddModelError("Email", errorModel.ErrorMessage!);
-                }
-            }
 
             // и если модель все еще валидная => создаем пользователя
             if (ModelState.IsValid)
             {
-                await authBl.CreateUser(AuthMapper.MapRegisterViewModelToUserModel(model));
-                return Redirect("/");
+                try
+                {
+                    await authBl.Register(AuthMapper.MapRegisterViewModelToUserModel(model));
+                    return Redirect("/");
+                }
+                catch (DublicateEmailExeption)
+                {
+                    ModelState.TryAddModelError("Email", "Email не существует");
+                }
             }
 
-            // файл "Index" будет искаться, по умолчанию, в папке с названием класса но без 
+            // файл "Index" будет искаться, по умолчанию, в папке с названием класса, но без 
             // "Controller", т.е. "Register" и если в папке "View" указать папку "Register" как-то
-            // по-другому, то придется здесь придется указывать полное имя (где его искать)
+            // по-другому, то здесь придется указывать полное имя (где его искать)
             return View("Index", model);
         }
     }

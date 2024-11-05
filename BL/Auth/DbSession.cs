@@ -53,7 +53,7 @@ namespace Resunet.BL.Auth
             else
                 sessionId = Guid.NewGuid();
 
-            var data = await this.sessionDAL.Get(sessionId); 
+            var data = await this.sessionDAL.Get(sessionId);
             if (data == null)
             {
                 data = await this.CreateSession();
@@ -68,7 +68,7 @@ namespace Resunet.BL.Auth
             var data = await this.GetSession(); // ожидается сессия
             data.UserId = userId;
             data.DbSessionId = Guid.NewGuid(); // новая сессия
-            CreateSessionCookie(data.DbSessionId); 
+            CreateSessionCookie(data.DbSessionId);
             return await sessionDAL.Create(data);
         }
 
@@ -82,6 +82,12 @@ namespace Resunet.BL.Auth
         {
             var data = await this.GetSession();
             return data.UserId != null;
+        }
+
+        public async Task Lock()
+        {
+            var data = await this.GetSession();
+            await sessionDAL.Lock(data.DbSessionId);
         }
     }
 }

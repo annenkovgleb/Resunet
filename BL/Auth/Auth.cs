@@ -2,6 +2,7 @@
 using Resunet.DAL;
 using System.ComponentModel.DataAnnotations;
 using Resunet.BL;
+using Resunet.BL.General;
 
 namespace Resunet.BL.Auth
 {
@@ -13,9 +14,9 @@ namespace Resunet.BL.Auth
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IDbSession dbSession;
 
-        public Auth(IAuthDAL authDal, 
+        public Auth(IAuthDAL authDal,
             IEncrypt encrypt,
-            IHttpContextAccessor httpContextAccessor, 
+            IHttpContextAccessor httpContextAccessor,
             IDbSession dbSession)
         /* IDbSession dbSession - получает BL уровня сессию, а AuthBL должен работь 
          * пожизненно сохранили объект, который должен умиреть после каждого 
@@ -56,13 +57,24 @@ namespace Resunet.BL.Auth
             throw new AuthorizationException();
         }
 
-        public async Task<ValidationResult?> ValidateEmail(string email)
+        public async Task ValidateEmail(string email)
         {
             var user = await authDal.GetUser(email);
             if (user.UserId != null)
-                return new ValidationResult("Email уже существует");
-            return null;
+                throw new DublicateEmailExeption();
+        }
+
+        public async Task Register(UserModel user)
+        {
+            // защита от спама
+            // при этом пользователь может зайти с телефона / компа
+            using (var scope = Helpers.CreateTransactionScope())
+            {
+                await dbSession.Lock();
+                await ValidateEmail(user.Email);
+                await CreateUser(user);
+                scope.Complete();
+            }
         }
     }
 }
-
