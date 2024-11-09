@@ -1,28 +1,24 @@
 ﻿using Resunet.DAL.Models;
 using Resunet.DAL;
+using Resunet.BL.General;
 
 namespace Resunet.BL.Auth
 {
     public class DbSession : IDbSession
     {
         private readonly IDbSessionDAL sessionDAL;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IWebCookie webCookie;
 
-        public DbSession(IDbSessionDAL sessionDAL, IHttpContextAccessor httpContextAccessor)
+        public DbSession(IDbSessionDAL sessionDAL, IWebCookie webCookie)
         {
             this.sessionDAL = sessionDAL;
-            this.httpContextAccessor = httpContextAccessor;
+            this.webCookie = webCookie;
         }
 
         private void CreateSessionCookie(Guid sessionid)
         {
-            CookieOptions options = new CookieOptions();
-            options.Path = "/";
-            options.HttpOnly = true;
-            options.Secure = true;
-            httpContextAccessor?.HttpContext?.Response.Cookies.Delete(AuthConstants.SessionCookieName);
-            httpContextAccessor?.HttpContext?.Response.Cookies.Append(
-                AuthConstants.SessionCookieName, sessionid.ToString(), options);
+            this.webCookie.Delete(AuthConstants.SessionCookieName);
+            this.webCookie.AddSecure(AuthConstants.SessionCookieName, sessionid.ToString());
         }
 
         private async Task<SessionModel> CreateSession()
@@ -45,7 +41,7 @@ namespace Resunet.BL.Auth
                 return sessionModel;
 
             Guid sessionId;
-            var cookie = httpContextAccessor?.HttpContext?.Request?.Cookies?.
+            var cookie = webCookie?.Request?.Cookies?.
                 FirstOrDefault(m => m.Key == AuthConstants.SessionCookieName);
             // если кука найдена, то пытаемся ее распарсить 
             if (cookie != null && cookie.Value.Value != null)
