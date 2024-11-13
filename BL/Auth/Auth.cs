@@ -11,23 +11,32 @@ namespace Resunet.BL.Auth
     {
         private readonly IAuthDAL authDal;
         private readonly IEncrypt encrypt;
-        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IDbSession dbSession;
+        private readonly IUserTokenDAL userTokenDAL;
+        private readonly IWebCookie webCookie;
 
         public Auth(IAuthDAL authDal,
             IEncrypt encrypt,
-            IHttpContextAccessor httpContextAccessor,
-            IDbSession dbSession)
-        /* IDbSession dbSession - получает BL уровня сессию, а AuthBL должен работь 
-         * пожизненно сохранили объект, который должен умиреть после каждого 
-         * запроса в объекте, который должен жить вечно - нельзя так :)
-         * если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
+            IWebCookie webCookie,
+            IDbSession dbSession,
+            IUserTokenDAL userTokenDAL
+            )
+        /* IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
+         * Сохранили объект, который должен умереть после каждого 
+         * запроса в объекте, который должен жить вечно - низя так.
+         * Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
          */
         {
             this.authDal = authDal;
             this.encrypt = encrypt;
-            this.httpContextAccessor = httpContextAccessor;
+            this.webCookie = webCookie;
             this.dbSession = dbSession;
+            this.userTokenDAL = userTokenDAL;
+        }
+
+        public async Task Login(int id)
+        {
+            await dbSession.SetUserId(id);
         }
 
         public async Task<int> CreateUser(UserModel user)
@@ -40,11 +49,6 @@ namespace Resunet.BL.Auth
             return id;
         }
 
-        public async Task Login(int id)
-        {
-            await dbSession.SetUserId(id);
-        }
-
         public async Task<int> Authenticate(string email, string password, bool rememberMe)
         {
             var user = await authDal.GetUser(email);
@@ -52,6 +56,14 @@ namespace Resunet.BL.Auth
             if (user.UserId != null && user.Password == encrypt.HashPassword(password, user.Salt))
             {
                 await Login(user.UserId ?? 0);
+
+                if (rememberMe)
+                {
+                    // создаем токен и отправляем его в куку
+                    Guid tokenId = await userTokenDAL.Create(user.UserId ?? 0);
+                    this.webCookie.AddSecure(AuthConstants.RememberMeCookieName, tokenId.ToString(), 30);
+                }
+
                 return user.UserId ?? 0;
             }
             throw new AuthorizationException();

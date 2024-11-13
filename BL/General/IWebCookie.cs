@@ -2,9 +2,9 @@
 {
     public interface IWebCookie
     {
-        public void AddSecure(string cookieName, string value);
+        public void AddSecure(string cookieName, string value, int days = 0);
 
-        void Add(string cookieName, string value);
+        void Add(string cookieName, string value, int days = 0);
         
         void Delete(string cookieName);
 

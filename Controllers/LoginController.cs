@@ -28,7 +28,8 @@ namespace Resunet.Controllers
                 try
                 {
                     await authBl.Authenticate(
-                        model.Email!, model.Password!,
+                        model.Email!, 
+                        model.Password!,
                         model.RememberMe == true);
                     return Redirect("/");
                 }

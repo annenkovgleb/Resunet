@@ -41,11 +41,9 @@ namespace Resunet.BL.Auth
                 return sessionModel;
 
             Guid sessionId;
-            var cookie = webCookie?.Request?.Cookies?.
-                FirstOrDefault(m => m.Key == AuthConstants.SessionCookieName);
-            // если кука найдена, то пытаемся ее распарсить 
-            if (cookie != null && cookie.Value.Value != null)
-                sessionId = Guid.Parse(cookie.Value.Value);
+            var sessionString = webCookie.Get(AuthConstants.SessionCookieName);
+            if (sessionString != null)
+                sessionId = Guid.Parse(sessionString); 
             else
                 sessionId = Guid.NewGuid();
 
