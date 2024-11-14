@@ -43,7 +43,7 @@ namespace Resunet.BL.Auth
             Guid sessionId;
             var sessionString = webCookie.Get(AuthConstants.SessionCookieName);
             if (sessionString != null)
-                sessionId = Guid.Parse(sessionString); 
+                sessionId = Guid.Parse(sessionString);
             else
                 sessionId = Guid.NewGuid();
 
@@ -82,6 +82,12 @@ namespace Resunet.BL.Auth
         {
             var data = await this.GetSession();
             await sessionDAL.Lock(data.DbSessionId);
+        }
+
+        // хелпер, только для тестов, чтобы пошел и проверил в бд
+        public void ResetSessionCache()
+        {
+            sessionModel = null;
         }
     }
 }

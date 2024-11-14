@@ -7,7 +7,7 @@ namespace Resunet.BL.General
     public class WebCookie : IWebCookie
     {
         private IHttpContextAccessor httpContextAccessor;
-     
+
         public WebCookie(IHttpContextAccessor httpContextAccessor)
         {
             this.httpContextAccessor = httpContextAccessor;

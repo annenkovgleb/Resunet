@@ -13,5 +13,7 @@ namespace Resunet.BL.Auth
         Task<bool> IsLoggedIn();
 
         Task Lock();
+
+        void ResetSessionCache();
     }
 }
