@@ -1,5 +1,4 @@
 ﻿using System;
-using Dapper;
 using Resunet.DAL.Models;
 using Npgsql;
 

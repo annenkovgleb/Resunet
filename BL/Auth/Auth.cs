@@ -9,16 +9,17 @@ namespace Resunet.BL.Auth
     // Bl уровень
     public class Auth : IAuth
     {
-        private readonly IAuthDAL authDal;
+        private readonly IAuthDAL authDAL;
         private readonly IEncrypt encrypt;
         private readonly IDbSession dbSession;
         private readonly IUserTokenDAL userTokenDAL;
         private readonly IWebCookie webCookie;
 
-        public Auth(IAuthDAL authDal,
+
+        public Auth(IAuthDAL authDAL,
             IEncrypt encrypt,
-            IWebCookie webCookie,
             IDbSession dbSession,
+            IWebCookie webCookie,
             IUserTokenDAL userTokenDAL
             )
         /* IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
@@ -27,10 +28,10 @@ namespace Resunet.BL.Auth
          * Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
          */
         {
-            this.authDal = authDal;
+            this.authDAL = authDAL;
             this.encrypt = encrypt;
-            this.webCookie = webCookie;
             this.dbSession = dbSession;
+            this.webCookie = webCookie;
             this.userTokenDAL = userTokenDAL;
         }
 
@@ -44,22 +45,21 @@ namespace Resunet.BL.Auth
             user.Salt = Guid.NewGuid().ToString();
             user.Password = encrypt.HashPassword(user.Password, user.Salt);
 
-            int id = await authDal.CreateUser(user);
+            int id = await authDAL.CreateUser(user);
             await Login(id);
             return id;
         }
 
         public async Task<int> Authenticate(string email, string password, bool rememberMe)
         {
-            var user = await authDal.GetUser(email);
+            var user = await authDAL.GetUser(email);
 
             if (user.UserId != null && user.Password == encrypt.HashPassword(password, user.Salt))
             {
                 await Login(user.UserId ?? 0);
 
-                if (rememberMe)
+                if (rememberMe) // создаем токен и отправляем его в куку
                 {
-                    // создаем токен и отправляем его в куку
                     Guid tokenId = await userTokenDAL.Create(user.UserId ?? 0);
                     this.webCookie.AddSecure(AuthConstants.RememberMeCookieName, tokenId.ToString(), 30);
                 }
@@ -71,7 +71,7 @@ namespace Resunet.BL.Auth
 
         public async Task ValidateEmail(string email)
         {
-            var user = await authDal.GetUser(email);
+            var user = await authDAL.GetUser(email);
             if (user.UserId != null)
                 throw new DublicateEmailExeption();
         }

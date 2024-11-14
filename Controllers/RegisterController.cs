@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using Resunet.ViewModels;
 using Resunet.ViewMapper;
 using Resunet.BL;
+using Resunet.Middleware;
 
 // ничего не знает о DAL уровне, его прерогатива работать только с BL уровнем
 
 namespace Resunet.Controllers
 {
+    [SiteNotAuthorize()]
     public class RegisterController : Controller
     {
         private readonly IAuth authBl;

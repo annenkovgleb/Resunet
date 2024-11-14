@@ -10,7 +10,7 @@ namespace Resunet.ViewModels
 		public string? Email { get; set; }
 
 		[Required(ErrorMessage = "Пароль обязателен")]
-        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{10,}$",
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$",
                 ErrorMessage = "Пароль слишком простой")]
         public string? Password { get; set; }
 

@@ -1,9 +1,12 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Resunet.ViewModels;
+using static System.Net.WebRequestMethods;
+using Resunet.Middleware;
 
 namespace Resunet.Controllers
 {
+    [SiteAuthorize()]
     public class ProfileController : Controller
     {
         [HttpGet]

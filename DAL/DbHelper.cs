@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Npgsql;
 
-
 namespace Resunet.DAL
 {
     public class DbHelper
