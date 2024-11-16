@@ -1,7 +1,4 @@
-﻿using System;
-using Dapper;
-using Npgsql;
-using Resunet.DAL.Models;
+﻿using Resunet.DAL.Models;
 
 namespace Resunet.DAL
 {

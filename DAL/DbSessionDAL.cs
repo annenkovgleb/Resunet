@@ -1,6 +1,4 @@
-﻿using System;
-using Resunet.DAL.Models;
-using Npgsql;
+﻿using Resunet.DAL.Models;
 
 namespace Resunet.DAL
 {

@@ -1,5 +1,4 @@
-﻿using Resunet.BL.Auth;
-using Resunet.BL.General;
+﻿using Resunet.BL.General;
 using Resunet.DAL;
 
 namespace Resunet.BL.Auth

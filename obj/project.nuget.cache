@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L0tQxScWHjs=",
+  "dgSpecHash": "3fylH0Z0EI8=",
   "success": true,
   "projectFilePath": "V:\\Project\\dotnet\\Resunet\\Resunet\\Resunet.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,8 @@
     "C:\\Users\\Gleb\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\Gleb\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "C:\\Users\\Gleb\\.nuget\\packages\\npgsql\\7.0.1\\npgsql.7.0.1.nupkg.sha512",
-    "C:\\Users\\Gleb\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.1\\npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512"
+    "C:\\Users\\Gleb\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.1\\npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512",
+    "C:\\Users\\Gleb\\.nuget\\packages\\sixlabors.imagesharp\\3.1.5\\sixlabors.imagesharp.3.1.5.nupkg.sha512"
   ],
   "logs": [
     {

@@ -6,6 +6,7 @@ namespace Resunet.ViewComponents
     public class MainMenuViewComponent : ViewComponent
     {
         private readonly ICurrentUser currentUser;
+        
         public MainMenuViewComponent(ICurrentUser currentUser)
         {
             this.currentUser = currentUser;

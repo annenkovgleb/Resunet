@@ -10,7 +10,8 @@
         "dependencies": {
           "Dapper": "2.0.123",
           "Npgsql": "7.0.1",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.1",
+          "SixLabors.ImageSharp": "3.1.5"
         },
         "runtime": {
           "Resunet.dll": {}
@@ -123,6 +124,14 @@
           "lib/net7.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
             "assemblyVersion": "7.0.1.0",
             "fileVersion": "7.0.1.0"
+          }
+        }
+      },
+      "SixLabors.ImageSharp/3.1.5": {
+        "runtime": {
+          "lib/net6.0/SixLabors.ImageSharp.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.1.5.0"
           }
         }
       }
@@ -245,6 +254,13 @@
       "sha512": "sha512-8txq2CsPWvWO4azZSBmKLKmYsL6dkGrarX2hJZY0Djx6uWZJGH9W0OTE1oHqn+aC5L+xrzyS+TM3kiKw2gdXuA==",
       "path": "npgsql.entityframeworkcore.postgresql/7.0.1",
       "hashPath": "npgsql.entityframeworkcore.postgresql.7.0.1.nupkg.sha512"
+    },
+    "SixLabors.ImageSharp/3.1.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lNtlq7dSI/QEbYey+A0xn48z5w4XHSffF8222cC4F4YwTXfEImuiBavQcWjr49LThT/pRmtWJRcqA/PlL+eJ6g==",
+      "path": "sixlabors.imagesharp/3.1.5",
+      "hashPath": "sixlabors.imagesharp.3.1.5.nupkg.sha512"
     }
   }
 }

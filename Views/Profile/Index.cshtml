@@ -1,19 +1,30 @@
 ﻿@model ProfileViewModel
 
 @{
-	ViewData["Title"] = "Профиль";
+    ViewData["Title"] = "Профиль";
 }
 
 <div>
-	<form action="/profile" method="post" enctype="multipart/form-data">
-		<p>
-			<label>Имя профиля</label>
-			<input name="ProfileName" type="text" value="@Model.ProfileName" />
-			<div class="error">@Html.ValidationMessageFor(m => m.ProfileName)</div>
-		</p>
-		<p>
-			<input type="file" name="file" />
-		</p>
-		<button>Авторизоваться</button>
-	</form>
+    <form action="/profile" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <p>
+            <label>Имя профиля</label>
+            <input name="ProfileName" type="text" value="@Model.ProfileName" />
+            <div class="error">@Html.ValidationMessageFor(m => m.ProfileName)</div>
+        </p>
+        <p>
+            <label>Имя</label>
+            <input name="FirstName" type="text" value="@Model.FirstName" />
+            <div class="error">@Html.ValidationMessageFor(m => m.FirstName)</div>
+        </p>
+        <p>
+            <label>Фамилия</label>
+            <input name="LastName" type="text" value="@Model.LastName" />
+            <div class="error">@Html.ValidationMessageFor(m => m.LastName)</div>
+        </p>
+        <p>
+            <input type="file" name="file" />
+        </p>
+        <button>Сохранить</button>
+    </form>
 </div>

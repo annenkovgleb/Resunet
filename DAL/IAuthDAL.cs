@@ -1,5 +1,4 @@
-﻿using System;
-using Resunet.DAL.Models;
+﻿using Resunet.DAL.Models;
 
 namespace Resunet.DAL
 {

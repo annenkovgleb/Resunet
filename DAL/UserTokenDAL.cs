@@ -1,6 +1,4 @@
-﻿using Resunet.DAL.Models;
-
-namespace Resunet.DAL
+﻿namespace Resunet.DAL
 {
     public class UserTokenDAL : IUserTokenDAL
     {

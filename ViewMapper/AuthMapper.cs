@@ -7,7 +7,7 @@ namespace Resunet.ViewMapper
 	public class AuthMapper
 	{
         // из RegisterViewModel будем получать модель и превращать ее в эту модель UserModel
-        // и будем отправлять на уровень (DAL)
+        // и отправлять на DAL-уровень
         public static UserModel MapRegisterViewModelToUserModel(RegisterViewModel model)
 		{
             return new UserModel()

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Resunet.BL.Auth
 {

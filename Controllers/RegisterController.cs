@@ -1,5 +1,4 @@
-﻿using System;
-using Resunet.BL.Auth;
+﻿using Resunet.BL.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Resunet.ViewModels;
 using Resunet.ViewMapper;

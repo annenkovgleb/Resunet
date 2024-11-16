@@ -8,7 +8,7 @@ namespace Resunet.ViewModels
         public string? ProfileName  { get; set; }
 
         [Required]
-        public string? FileName { get; set; }
+        public string? FirstName { get; set; }
 
         [Required]
         public string? LastName { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-namespace Resunet.BL.Auth
+﻿namespace Resunet.BL.Auth
 {
     public class AuthConstants
     {
@@ -8,6 +7,8 @@ namespace Resunet.BL.Auth
         public const string SessionCookieName = "CustomSessionId";
 
         public const string RememberMeCookieName = "RememberMe";
+
+        public const int RememberMeDays = 30;
     }
 }
 

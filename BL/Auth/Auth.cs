@@ -1,12 +1,9 @@
 ﻿using Resunet.DAL.Models;
 using Resunet.DAL;
-using System.ComponentModel.DataAnnotations;
-using Resunet.BL;
 using Resunet.BL.General;
 
 namespace Resunet.BL.Auth
 {
-    // Bl уровень
     public class Auth : IAuth
     {
         private readonly IAuthDAL authDAL;
@@ -14,7 +11,6 @@ namespace Resunet.BL.Auth
         private readonly IDbSession dbSession;
         private readonly IUserTokenDAL userTokenDAL;
         private readonly IWebCookie webCookie;
-
 
         public Auth(IAuthDAL authDAL,
             IEncrypt encrypt,
@@ -58,10 +54,11 @@ namespace Resunet.BL.Auth
             {
                 await Login(user.UserId ?? 0);
 
-                if (rememberMe) // создаем токен и отправляем его в куку
+                if (rememberMe) 
                 {
+                    // создаем токен и отправляем его в куку
                     Guid tokenId = await userTokenDAL.Create(user.UserId ?? 0);
-                    this.webCookie.AddSecure(AuthConstants.RememberMeCookieName, tokenId.ToString(), 30);
+                    this.webCookie.AddSecure(AuthConstants.RememberMeCookieName, tokenId.ToString(), AuthConstants.RememberMeDays);
                 }
 
                 return user.UserId ?? 0;
@@ -78,8 +75,7 @@ namespace Resunet.BL.Auth
 
         public async Task Register(UserModel user)
         {
-            // защита от спама
-            // при этом пользователь может зайти с телефона / компа
+            // защита от спама, при этом пользователь может зайти с разных устройств
             using (var scope = Helpers.CreateTransactionScope())
             {
                 await dbSession.Lock();

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Resunet.BL.Auth;
-
-namespace Resunet.BL.General
+﻿namespace Resunet.BL.General
 {
     // обертка, чтобы не реализовывать все с HttpContext
     public class WebCookie : IWebCookie
@@ -18,7 +15,7 @@ namespace Resunet.BL.General
             CookieOptions options = new CookieOptions();
             options.Path = "/";
             if (days > 0)
-                options.Expires = DateTimeOffset.UtcNow.AddDays(30);
+                options.Expires = DateTimeOffset.UtcNow.AddDays(days);
             httpContextAccessor?.HttpContext?.Response.Cookies.Append(cookieName, value, options);
         }
 
@@ -29,7 +26,7 @@ namespace Resunet.BL.General
             options.HttpOnly = true;
             options.Secure = true;
             if (days > 0)
-                options.Expires = DateTimeOffset.UtcNow.AddDays(30);
+                options.Expires = DateTimeOffset.UtcNow.AddDays(days);
             httpContextAccessor?.HttpContext?.Response.Cookies.Append(cookieName, value, options);
         }
 

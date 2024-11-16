@@ -83,3 +83,4 @@ V:\Project\dotnet\Resunet\Resunet\obj\Debug\net7.0\Resunet.pdb
 V:\Project\dotnet\Resunet\Resunet\obj\Debug\net7.0\Resunet.genruntimeconfig.cache
 V:\Project\dotnet\Resunet\Resunet\obj\Debug\net7.0\ref\Resunet.dll
 V:\Project\dotnet\Resunet\Resunet\obj\Debug\net7.0\Resunet.sourcelink.json
+V:\Project\dotnet\Resunet\Resunet\bin\Debug\net7.0\SixLabors.ImageSharp.dll

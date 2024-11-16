@@ -1,6 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Resunet.DAL.Models;
+﻿using Resunet.DAL.Models;
 
 namespace Resunet.BL.Auth
 {
