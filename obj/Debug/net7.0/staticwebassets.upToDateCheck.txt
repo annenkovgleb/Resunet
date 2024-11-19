@@ -1,6 +1,5 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
-wwwroot\images\FB\FB10\Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap.css
 wwwroot\lib\bootstrap\dist\css\bootstrap.css.map

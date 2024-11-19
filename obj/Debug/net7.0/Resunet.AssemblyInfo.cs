@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Resunet")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f358aeb193d66b52de609f9449361abb9f59353f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ccf374f7cedf564baa4a179b993e6abe016a223a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Resunet")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Resunet")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

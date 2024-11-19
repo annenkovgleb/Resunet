@@ -24,18 +24,6 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"5430"},{"Name":"Content-Type","Value":"image/x-icon"},{"Name":"ETag","Value":"\u0022Jtxf9L\u002B5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\u0022"},{"Name":"Last-Modified","Value":"Sun, 27 Oct 2024 16:32:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Resunet/images/FB/FB10/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.34ovn5xs3v.jpg">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\FB\FB10\Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"34ovn5xs3v"},{"Name":"integrity","Value":"sha256-00bI0RpB9NI049K/ruQRlndkLZbvZ5ZSj7/hM2Q1aE4="},{"Name":"label","Value":"_content/Resunet/images/FB/FB10/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"675209"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002200bI0RpB9NI049K/ruQRlndkLZbvZ5ZSj7/hM2Q1aE4=\u0022"},{"Name":"Last-Modified","Value":"Thu, 31 Oct 2024 10:00:34 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Resunet/images/FB/FB10/Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\FB\FB10\Best-laptops-in-2021-7-things-to-consider-when-buying-a-laptop.jpg'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-00bI0RpB9NI049K/ruQRlndkLZbvZ5ZSj7/hM2Q1aE4="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"675209"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u002200bI0RpB9NI049K/ruQRlndkLZbvZ5ZSj7/hM2Q1aE4=\u0022"},{"Name":"Last-Modified","Value":"Thu, 31 Oct 2024 10:00:34 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Resunet/js/site.6kx2lsrwu6.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

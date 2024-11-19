@@ -52,8 +52,6 @@ namespace Resunet.Service
                 else
                     aspectWindth = (int)(image.Width / (image.Height / (float)newHeight));
 
-                int width = image.Width / 2;
-                int height = image.Height / 2;
                 image.Mutate(x => x.Resize(aspectWindth, aspectHeight, KnownResamplers.Lanczos3));
 
                 await image.SaveAsJpegAsync(filename, new JpegEncoder() { Quality = 75 });

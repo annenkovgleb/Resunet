@@ -20,7 +20,9 @@ namespace Resunet.Middleware
         {
             ICurrentUser? currentUser = context.HttpContext.RequestServices.GetService<ICurrentUser>();
             if (currentUser == null)
+            {
                 throw new Exception("No user middleware");
+            }
 
             bool isLoggedIn = await currentUser.IsLoggedIn();
             if (isLoggedIn)
