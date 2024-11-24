@@ -12,17 +12,16 @@ namespace Resunet.BL.Auth
         private readonly IUserTokenDAL userTokenDAL;
         private readonly IWebCookie webCookie;
 
+        // IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
+        // Сохранили объект, который должен умереть после каждого 
+        // запроса в объекте, который должен жить вечно - низя так.
+        // Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
         public Auth(IAuthDAL authDAL,
             IEncrypt encrypt,
             IDbSession dbSession,
             IWebCookie webCookie,
             IUserTokenDAL userTokenDAL
             )
-        /* IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
-         * Сохранили объект, который должен умереть после каждого 
-         * запроса в объекте, который должен жить вечно - низя так.
-         * Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
-         */
         {
             this.authDAL = authDAL;
             this.encrypt = encrypt;
@@ -54,7 +53,7 @@ namespace Resunet.BL.Auth
             {
                 await Login(user.UserId ?? 0);
 
-                if (rememberMe) 
+                if (rememberMe)
                 {
                     // создаем токен и отправляем его в куку
                     Guid tokenId = await userTokenDAL.Create(user.UserId ?? 0);

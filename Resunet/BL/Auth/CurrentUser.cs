@@ -48,5 +48,10 @@ namespace Resunet.BL.Auth
             }
             return isLoggedIn;
         }
+    
+        public async Task<int?> GetCurrentUserId()
+        {
+            return await dbSession.GetUserId();
+        }
     }
 }

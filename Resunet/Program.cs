@@ -6,6 +6,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<Resunet.DAL.IAuthDAL, Resunet.DAL.AuthDAL>();
 builder.Services.AddSingleton<Resunet.DAL.IDbSessionDAL, Resunet.DAL.DbSessionDAL>();
 builder.Services.AddSingleton<Resunet.DAL.IUserTokenDAL, Resunet.DAL.UserTokenDAL>();
+builder.Services.AddSingleton<Resunet.DAL.IProfileDAL, Resunet.DAL.ProfileDAL>();
 
 builder.Services.AddTransient<Resunet.BL.Auth.IAuth, Resunet.BL.Auth.Auth>();
 builder.Services.AddSingleton<Resunet.BL.Auth.IEncrypt, Resunet.BL.Auth.Encrypt>();
@@ -13,6 +14,7 @@ builder.Services.AddScoped<Resunet.BL.Auth.ICurrentUser, Resunet.BL.Auth.Current
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<Resunet.BL.Auth.IDbSession, Resunet.BL.Auth.DbSession>(); // хранение состояния 
 builder.Services.AddScoped<Resunet.BL.General.IWebCookie, Resunet.BL.General.WebCookie>();
+builder.Services.AddScoped<Resunet.BL.Profile.IProfile, Resunet.BL.Profile.Profile>();
 
 // для сессии нужен дата провайдер
 builder.Services.AddMvc();

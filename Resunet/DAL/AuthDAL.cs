@@ -10,7 +10,6 @@ namespace Resunet.DAL
                         select UserId, Email, Password, Salt, Status
                         from AppUser
                         where Email = @email", new { email = email });
-
             return result.FirstOrDefault() ?? new UserModel();
         }
 
@@ -20,7 +19,6 @@ namespace Resunet.DAL
                         select UserId, Email, Password, Salt, Status
                         from AppUser
                         where UserId = @id", new { id = id });
-
             return result.FirstOrDefault() ?? new UserModel();
         }
 

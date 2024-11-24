@@ -2,6 +2,7 @@
 using Resunet.BL.Auth;
 using Resunet.Middleware;
 using Resunet.ViewModels;
+using Resunet.BL;
 
 namespace Resunet.Controllers
 {
@@ -34,7 +35,7 @@ namespace Resunet.Controllers
                     await authBl.Authenticate(model.Email!, model.Password!, model.RememberMe == true);
                     return Redirect("/");
                 }
-                catch (Resunet.BL.AuthorizationException)
+                catch (AuthorizationException)
                 {
                     ModelState.AddModelError("Email", "Имя или Email неверные");
                 }
