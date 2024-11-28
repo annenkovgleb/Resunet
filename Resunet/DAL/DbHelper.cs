@@ -7,13 +7,12 @@ namespace Resunet.DAL
     {
         public static string ConnString = "User ID=postgres;Password=password;Host=localhost;Port=5432;Database=test";
 
-        public static async Task<int> ExecuteScalarAsync(string sql, object model)
+        public static async Task ExecuteAsync(string sql, object model)
         {
             using (var connection = new NpgsqlConnection(DbHelper.ConnString))
             {
                 await connection.OpenAsync();
-
-                return await connection.ExecuteAsync(sql,model);
+                await connection.ExecuteAsync(sql, model);
             }
         }
 
@@ -24,6 +23,16 @@ namespace Resunet.DAL
                 await connection.OpenAsync();
 
                 return await connection.QueryAsync<T>(sql, model);
+            }
+        }
+
+        public static async Task<T> QueryScalarAsync<T>(string sql, object model)
+        {
+            using (var connection = new NpgsqlConnection(DbHelper.ConnString))
+            {
+                await connection.OpenAsync();
+
+                return await connection.QueryFirstOrDefaultAsync<T>(sql, model);
             }
         }
     }

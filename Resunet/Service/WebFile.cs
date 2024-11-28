@@ -47,7 +47,7 @@ namespace Resunet.Service
                 int aspectWindth = newWidth;
                 int aspectHeight = newHeight;
 
-                if (image.Width / (image.Height / newHeight) > newWidth)
+                if (image.Width / (image.Height / (float)newHeight) > newWidth)
                     aspectHeight = (int)(image.Height / (image.Width / (float)newWidth));
                 else
                     aspectWindth = (int)(image.Width / (image.Height / (float)newHeight));

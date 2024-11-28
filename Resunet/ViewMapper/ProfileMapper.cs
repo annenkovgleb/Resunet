@@ -10,13 +10,14 @@ namespace Resunet.ViewMapper
             // этом маппере должны быть только те поля, которые user может ввести в UI
             return new ProfileModel()
             {
+                ProfileId = model.ProfileId,
                 ProfileName = model.ProfileName,
                 FirstName = model.FirstName,
                 LastName = model.LastName
             };
         }
 
-        // превращения бэкенд во фронтенд
+        // превращение бэкенд во фронтенд
         public static ProfileViewModel MapProfileModelToProfileViewModel(ProfileModel model)
         {
             return new ProfileViewModel()

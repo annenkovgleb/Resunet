@@ -14,7 +14,7 @@ builder.Services.AddScoped<Resunet.BL.Auth.ICurrentUser, Resunet.BL.Auth.Current
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<Resunet.BL.Auth.IDbSession, Resunet.BL.Auth.DbSession>(); // хранение состояния 
 builder.Services.AddScoped<Resunet.BL.General.IWebCookie, Resunet.BL.General.WebCookie>();
-builder.Services.AddScoped<Resunet.BL.Profile.IProfile, Resunet.BL.Profile.Profile>();
+builder.Services.AddSingleton<Resunet.BL.Profile.IProfile, Resunet.BL.Profile.Profile>();
 
 // для сессии нужен дата провайдер
 builder.Services.AddMvc();

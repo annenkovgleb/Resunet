@@ -4,11 +4,11 @@ namespace Resunet.DAL
 {
     public class DbSessionDAL : IDbSessionDAL
     {
-        public async Task<int> Create(SessionModel model)
+        public async Task Create(SessionModel model)
         {
             string sql = @" insert into DbSession (DbSessionID, SessionData, Created, LastAccessed, UserId)
                 values (@DbSessionID, @SessionContent, @Created, @LastAccessed, @UserId)";
-            return await DbHelper.ExecuteScalarAsync(sql, model);
+            await DbHelper.ExecuteAsync(sql, model);
         }
 
         public async Task<SessionModel?> Get(Guid sessionId)
@@ -26,13 +26,13 @@ namespace Resunet.DAL
             await DbHelper.QueryAsync<SessionModel>(sql, new { sessionId = sessionId });
         }
 
-        public async Task<int> Update(SessionModel model)
+        public async Task Update(SessionModel model)
         {
             string sql = @"update DbSession
                       set SessionData = @SessionData, LastAccessed = @LastAccessed, UserId = @UserId
                       where DbSessionID = @DbSessionID";
 
-            return await DbHelper.ExecuteScalarAsync(sql, model);
+            await DbHelper.ExecuteAsync(sql, model);
         }
     }
 }

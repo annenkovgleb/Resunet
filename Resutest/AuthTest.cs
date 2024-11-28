@@ -30,7 +30,15 @@ namespace Resutest
                 Assert.Throws<AuthorizationException>(delegate { authBL.Authenticate("werewr", "qwer1234", false).GetAwaiter().GetResult(); });
                 Assert.Throws<AuthorizationException>(delegate { authBL.Authenticate(email, "111", false).GetAwaiter().GetResult(); });
                 await authBL.Authenticate(email, "qwer1234", false);
+
+                string? authCookie = this.webCookie.Get(Resunet.BL.Auth.AuthConstants.SessionCookieName);
+                Assert.NotNull(authCookie);
+
+                string? rememberMeCookie = this.webCookie.Get(Resunet.BL.Auth.AuthConstants.RememberMeCookieName);
+                Assert.Null(rememberMeCookie);
             }
         }
+
+
     }
 }

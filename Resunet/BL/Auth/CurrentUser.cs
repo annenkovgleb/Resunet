@@ -1,5 +1,6 @@
 ﻿using Resunet.BL.General;
 using Resunet.DAL;
+using Resunet.DAL.Models;
 
 namespace Resunet.BL.Auth
 {
@@ -8,16 +9,19 @@ namespace Resunet.BL.Auth
         private readonly IDbSession dbSession;
         private readonly IWebCookie webCookie;
         private readonly IUserTokenDAL userTokenDAL;
+        private readonly IProfileDAL profileDAL;
 
         public CurrentUser(
             IDbSession dbSession,
             IWebCookie webCookie,
-            IUserTokenDAL userTokenDAL
+            IUserTokenDAL userTokenDAL,
+            IProfileDAL profileDAL
             )
         {
             this.dbSession = dbSession;
             this.webCookie = webCookie;
             this.userTokenDAL = userTokenDAL;
+            this.profileDAL = profileDAL;
         }
 
         public async Task<int?> GetUserIdByToken()
@@ -25,7 +29,6 @@ namespace Resunet.BL.Auth
             string? tokenCookie = webCookie.Get(AuthConstants.RememberMeCookieName);
             if (tokenCookie == null)
                 return null;
-
             Guid? tokenGuid = Helpers.StringToGuidDef(tokenCookie ?? "");
             if (tokenGuid == null) // сделал проверку и выкинул с сайта
                 return null;
@@ -48,10 +51,18 @@ namespace Resunet.BL.Auth
             }
             return isLoggedIn;
         }
-    
+
         public async Task<int?> GetCurrentUserId()
         {
             return await dbSession.GetUserId();
+        }
+
+        public async Task<IEnumerable<ProfileModel>> GetProfiles()
+        {
+            int? userid = await currentUser.GetCurrentUserId();
+            if (userid == null)
+                throw new Exception("Пользователь не найден");
+            return await profileDAL.Get((int)userid);
         }
     }
 }

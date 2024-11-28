@@ -1,16 +1,28 @@
-﻿using Resunet.DAL.Models;
+﻿using Resunet.DAL;
+using Resunet.DAL.Models;
 
 namespace Resunet.BL.Profile
 {
     public class Profile : IProfile
     {
-        public Profile()
+        private readonly IProfileDAL profileDAL;
+
+        public Profile(IProfileDAL profileDAL)
         {
+            this.profileDAL = profileDAL;
         }
 
-        public Task<IEnumerable<ProfileModel>> Get(int userId)
+        public async Task AddOrUpdate(ProfileModel model)
         {
-            throw new NotImplementedException();
+            if (model.ProfileId == null)
+                await profileDAL.Add(model);
+            else
+                await profileDAL.Update(model);
+        }
+
+        public async Task<IEnumerable<ProfileModel>> Get(int userId)
+        {
+            return await profileDAL.Get(userId);
         }
     }
 }

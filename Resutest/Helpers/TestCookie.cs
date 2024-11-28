@@ -1,4 +1,5 @@
-﻿using Resunet.BL.General;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Resunet.BL.General;
 
 namespace Resutest.Helpers
 {
@@ -6,12 +7,12 @@ namespace Resutest.Helpers
     {
         Dictionary<string, string> cookies = new Dictionary<string, string>();
 
-        public void Add(string cookieName, string value)
+        public void Add(string cookieName, string value, int days = 0)
         {
             cookies.Add(cookieName, value);
         }
 
-        public void AddSecure(string cookieName, string value)
+        public void AddSecure(string cookieName, string value, int days = 0)
         {
             cookies.Add(cookieName, value);
         }
@@ -26,6 +27,11 @@ namespace Resutest.Helpers
             if (cookies.ContainsKey(cookieName))
                 return cookies[cookieName];
             return null;
+        }
+
+        public void Clear()
+        {
+            cookies.Clear();
         }
     }
 }
