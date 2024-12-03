@@ -25,7 +25,8 @@ namespace Resunet.ViewMapper
                 ProfileId = model.ProfileId,
                 ProfileName = model.ProfileName,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                ProfileImage = model.ProfileImage
             };
         }
     }

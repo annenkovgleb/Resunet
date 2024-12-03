@@ -8,16 +8,22 @@ namespace Resunet.Service
 {
     public class WebFile
     {
-        public WebFile()
-        {
-        }
+        const string FOLDER_PREFIX = "./wwwroot";
+
+        public WebFile() { }
+
+
+        // изменить имя файла, если превышает кол-во символов 
+
 
         public string GetWebFilename(string filename)
         {
             string directory = GetWebFileFolder(filename);
-            CreateFolder(directory);
+
+            CreateFolder(FOLDER_PREFIX + directory);
+
             // в середину можно добавить какую-то уникальность для названия файла
-            return directory + "/" + Path.GetFileNameWithoutExtension(filename) + ".jpeg";
+            return directory + "/" + Path.GetFileNameWithoutExtension(filename) + ".jpg";
         }
 
         public string GetWebFileFolder(string filename)
@@ -25,10 +31,11 @@ namespace Resunet.Service
             MD5 md5hash = MD5.Create(); // MD5 - бывают перебои с коллизиями
             byte[] inputBytes = Encoding.ASCII.GetBytes(filename);
             byte[] hashBytes = md5hash.ComputeHash(inputBytes);
+
             string hash = Convert.ToHexString(hashBytes);
 
             // 1 сабстринг - 1ая папка из 2х символов, 2 - следующая папка
-            return "./wwwroot/images/" + hash.Substring(0, 2) + "/" +
+            return "/images/" + hash.Substring(0, 2) + "/" +
                     hash.Substring(0, 4);
         }
 
@@ -44,17 +51,18 @@ namespace Resunet.Service
         {
             using (Image image = await Image.LoadAsync(fileStream))
             {
-                int aspectWindth = newWidth;
+                int aspectWidth = newWidth;
                 int aspectHeight = newHeight;
 
                 if (image.Width / (image.Height / (float)newHeight) > newWidth)
                     aspectHeight = (int)(image.Height / (image.Width / (float)newWidth));
                 else
-                    aspectWindth = (int)(image.Width / (image.Height / (float)newHeight));
+                    aspectWidth = (int)(image.Width / (image.Height / (float)newHeight));
 
-                image.Mutate(x => x.Resize(aspectWindth, aspectHeight, KnownResamplers.Lanczos3));
+                // int height = image.Height / 2;
+                image.Mutate(x => x.Resize(aspectWidth, aspectHeight, KnownResamplers.Lanczos3));
 
-                await image.SaveAsJpegAsync(filename, new JpegEncoder() { Quality = 75 });
+                await image.SaveAsJpegAsync(FOLDER_PREFIX + filename, new JpegEncoder() { Quality = 75 });
             }
         }
     }

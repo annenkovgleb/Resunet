@@ -33,22 +33,21 @@ namespace Resunet.Controllers
         }
 
         [HttpPost]
-        [Route("/profile")]
+        [Route("/profile/uploadimage")]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> IndexSave(ProfileViewModel model)
+        public async Task<IActionResult> ImageSave(int? profileId)
         {
             int? userid = await currentUser.GetCurrentUserId();
             if (userid == null)
                 throw new Exception("Пользователь не найден");
 
             var profiles = await profile.Get((int)userid);
-            if (model.ProfileId != null && !profiles.Any(m => m.ProfileId == model.ProfileId))
+            if (profileId != null && !profiles.Any(m => m.ProfileId == profileId))
                 throw new Exception("Error");
-
 
             if (ModelState.IsValid)
             {
-                ProfileModel profileModel = ProfileMapper.MapProfileViewModelToProfileModel(model); // нужна на бэке
+                ProfileModel profileModel = profiles.FirstOrDefault(m => m.ProfileId == profileId) ?? new ProfileModel();
                 profileModel.UserId = (int)userid;
 
                 // Request.Form.Files[0] != null при обращении к нулевому массиву, если файл никто не выберет, то здесь все рухнет
@@ -61,9 +60,32 @@ namespace Resunet.Controllers
                     profileModel.ProfileImage = filename;
                 }
                 await profile.AddOrUpdate(profileModel);
+            }
+            return Redirect("/profile");
+        }
+
+        [HttpPost]
+        [Route("/profile")]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> IndexSave(ProfileViewModel model)
+        {
+            int? userid = await currentUser.GetCurrentUserId();
+
+            // на всякий случай, можно удалить, тк есть [SiteAuthorize()]
+            if (userid == null)
+                throw new Exception("Пользователь не найден");
+
+            var profiles = await profile.Get((int)userid);
+            if (model.ProfileId != null && !profiles.Any(m => m.ProfileId == model.ProfileId))
+                throw new Exception("Error");
+
+            if (ModelState.IsValid)
+            {
+                ProfileModel profileModel = ProfileMapper.MapProfileViewModelToProfileModel(model); // нужна на бэке
+                profileModel.UserId = (int)userid;
+                await profile.AddOrUpdate(profileModel);
                 return Redirect("/");
             }
-
             return View("Index", new ProfileViewModel());
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System.Transactions;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Resutest.Helpers;
 
 namespace Resutest
@@ -37,6 +38,7 @@ namespace Resutest
                 ((TestCookie)this.webCookie).Clear();
                 this.dbSession.ResetSessionCache();
                 var session = await this.dbSession.GetSession();
+                await this.dbSession.SetUserId(10);
 
                 // получить сессию из бд и убедиться, что она там существует
                 var dbSession = await dbSessionDAL.Get(session.DbSessionId);
@@ -48,6 +50,9 @@ namespace Resutest
 
                 var session2 = await this.dbSession.GetSession();
                 Assert.That(dbSession.DbSessionId, Is.EqualTo(session2.DbSessionId));
+
+                int? userid = await this.currentUser.GetCurrentUserId();
+                Assert.That(userid, Is.EqualTo(10));
             }
         }
     }

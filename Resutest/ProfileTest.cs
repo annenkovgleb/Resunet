@@ -13,7 +13,7 @@ namespace Resutest
                 await profile.AddOrUpdate(
                     new Resunet.DAL.Models.ProfileModel()
                     {
-                        UserId = 10,
+                        UserId = 19,
                         FirstName = "Иван",
                         LastName = "Иванов",
                         ProfileName = "Тест"
@@ -44,13 +44,13 @@ namespace Resutest
                 };
 
                 await profile.AddOrUpdate(profileModel);
-                
+
                 profileModel.FirstName = "Иван1";
 
                 await profile.AddOrUpdate(profileModel);
 
                 var results = await profile.Get(19);
-                Assert.That(results.Count(), Is.EqualTo(1));
+                Assert.That(results.Count(), Is.EqualTo(1)); // здесь рухается 
 
                 var result = results.First();
                 Assert.That(result.FirstName, Is.EqualTo("Иван1"));

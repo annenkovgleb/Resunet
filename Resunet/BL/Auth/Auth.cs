@@ -18,15 +18,15 @@ namespace Resunet.BL.Auth
         // Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
         public Auth(IAuthDAL authDAL,
             IEncrypt encrypt,
-            IDbSession dbSession,
             IWebCookie webCookie,
+            IDbSession dbSession,
             IUserTokenDAL userTokenDAL
             )
         {
             this.authDAL = authDAL;
             this.encrypt = encrypt;
-            this.dbSession = dbSession;
             this.webCookie = webCookie;
+            this.dbSession = dbSession;
             this.userTokenDAL = userTokenDAL;
         }
 

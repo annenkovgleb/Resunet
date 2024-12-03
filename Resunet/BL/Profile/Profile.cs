@@ -22,7 +22,7 @@ namespace Resunet.BL.Profile
 
         public async Task<IEnumerable<ProfileModel>> Get(int userId)
         {
-            return await profileDAL.Get(userId);
+            return await profileDAL.GetByUserId(userId);
         }
     }
 }

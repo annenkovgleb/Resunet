@@ -9,7 +9,5 @@
         void Delete(string cookieName);
 
         string? Get(string cookieName);
-
-        void Clear();
     }
 }

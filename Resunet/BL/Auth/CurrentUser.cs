@@ -59,10 +59,10 @@ namespace Resunet.BL.Auth
 
         public async Task<IEnumerable<ProfileModel>> GetProfiles()
         {
-            int? userid = await currentUser.GetCurrentUserId();
+            int? userid = await GetCurrentUserId();
             if (userid == null)
                 throw new Exception("Пользователь не найден");
-            return await profileDAL.Get((int)userid);
+            return await profileDAL.GetByUserId((int)userid);
         }
     }
 }
