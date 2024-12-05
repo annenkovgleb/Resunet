@@ -1,6 +1,7 @@
 ﻿using Resunet.DAL.Models;
 using Resunet.DAL;
 using Resunet.BL.General;
+using System.Text.Json;
 
 namespace Resunet.BL.Auth
 {
@@ -8,6 +9,9 @@ namespace Resunet.BL.Auth
     {
         private readonly IDbSessionDAL sessionDAL;
         private readonly IWebCookie webCookie;
+
+        private SessionModel? sessionModel = null;
+        private Dictionary<string, object> SessionData = new Dictionary<string, object>();
 
         public DbSession(IDbSessionDAL sessionDAL, IWebCookie webCookie)
         {
@@ -34,7 +38,6 @@ namespace Resunet.BL.Auth
             return data;
         }
 
-        private SessionModel? sessionModel = null;
         public async Task<SessionModel> GetSession()
         {
             if (sessionModel != null)
@@ -53,8 +56,34 @@ namespace Resunet.BL.Auth
                 data = await this.CreateSession();
                 CreateSessionCookie(data.DbSessionId);
             }
+
             sessionModel = data;
+            if (data.SessionData != null)
+                SessionData = JsonSerializer.Deserialize<Dictionary<string, object>>(data.SessionData) ?? new Dictionary<string, object>();
+
+            await this.sessionDAL.Extend(data.DbSessionId);
             return data;
+        }
+
+        public async Task UpdateSessionData()
+        {
+            if (this.sessionModel != null)
+                await this.sessionDAL.Update(this.sessionModel.DbSessionId, JsonSerializer.Serialize(SessionData));
+            else throw new Exception("Сессия не загружена");
+        }
+
+        public void AddValue(string key, object value)
+        {
+            if (SessionData.ContainsKey(key))
+                SessionData[key] = value;
+            else
+                SessionData.Add(key, value);
+        }
+
+        public void RemoveValue(string key)
+        {
+            if (SessionData.ContainsKey(key))
+                SessionData.Remove(key);
         }
 
         public async Task SetUserId(int userId)
@@ -63,7 +92,8 @@ namespace Resunet.BL.Auth
             data.UserId = userId;
             data.DbSessionId = Guid.NewGuid(); // новая сессия
             CreateSessionCookie(data.DbSessionId);
-             await sessionDAL.Create(data);
+            data.SessionData = JsonSerializer.Serialize(SessionData);
+            await sessionDAL.Create(data);
         }
 
         public async Task<int?> GetUserId()

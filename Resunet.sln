@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resunet", "Resunet\Resunet.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resutest", "Resutest\Resutest.csproj", "{A5A19974-F1BD-4261-9067-3EE086F18071}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetUI", "ResunetUI\ResunetUI.csproj", "{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A5A19974-F1BD-4261-9067-3EE086F18071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A19974-F1BD-4261-9067-3EE086F18071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A19974-F1BD-4261-9067-3EE086F18071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

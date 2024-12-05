@@ -1,4 +1,5 @@
-﻿using Resunet.DAL.Models;
+﻿using System.Data;
+using Resunet.DAL.Models;
 
 namespace Resunet.DAL
 {
@@ -26,13 +27,22 @@ namespace Resunet.DAL
             await DbHelper.QueryAsync<SessionModel>(sql, new { sessionId = sessionId });
         }
 
-        public async Task Update(SessionModel model)
+        public async Task Update(Guid dbSessionID, string sessionData)
         {
             string sql = @"update DbSession
-                      set SessionData = @SessionData, LastAccessed = @LastAccessed, UserId = @UserId
+                      set SessionData = @SessionData
                       where DbSessionID = @DbSessionID";
 
-            await DbHelper.ExecuteAsync(sql, model);
+            await DbHelper.ExecuteAsync(sql, new { dbSessionID = dbSessionID, sessionData = sessionData });
+        }
+
+        public async Task Extend(Guid dbSessionID)
+        {
+            string sql = @"update DbSession
+                    set LastAccessed = @lastAccessed
+                    where DbSessionID = @dbSessionID";
+
+            await DbHelper.ExecuteAsync(sql, new { dbSessionID = dbSessionID, lastAccessed = DateTime.Now });
         }
     }
 }
