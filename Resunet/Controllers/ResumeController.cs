@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Resume;
+using ResunetBl.Resume;
 
-namespace Resunet.Controllers
+namespace ResunetBl.Controllers
 {
     public class ResumeController : Controller
     {

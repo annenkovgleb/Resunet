@@ -1,13 +1,13 @@
-﻿using Resunet.BL.Auth;
-using Microsoft.AspNetCore.Mvc;
-using Resunet.ViewModels;
-using Resunet.ViewMapper;
-using Resunet.BL;
-using Resunet.Middleware;
+﻿using Microsoft.AspNetCore.Mvc;
+using ResunetBl.ViewModels;
+using ResunetBl.ViewMapper;
+using ResunetBl.Middleware;
+using ResunetBl.Auth;
+using ResunetBl.Exeption;
 
 // ничего не знает о DAL уровне, его прерогатива работать только с BL уровнем
 
-namespace Resunet.Controllers
+namespace ResunetBl.Controllers
 {
     [SiteNotAuthorize()]
     public class RegisterController : Controller

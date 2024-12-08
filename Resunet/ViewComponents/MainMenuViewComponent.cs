@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Auth;
+using ResunetBl.Auth;
 
-namespace Resunet.ViewComponents
+namespace ResunetBl.ViewComponents
 {
     public class MainMenuViewComponent : ViewComponent
     {

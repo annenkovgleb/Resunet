@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Auth;
-using Resunet.Middleware;
-using Resunet.ViewModels;
-using Resunet.BL;
+using ResunetBl.Middleware;
+using ResunetBl.ViewModels;
+using ResunetBl.Auth;
+using ResunetBl.Exeption;
 
-namespace Resunet.Controllers
+namespace ResunetBl.Controllers
 {
     [SiteNotAuthorize()]
     public class LoginController : Controller

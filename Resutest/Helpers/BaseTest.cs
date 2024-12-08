@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Resunet.BL.Auth;
-using Resunet.BL.General;
-using Resunet.BL.Profile;
-using Resunet.DAL;
+using ResunetBl.Auth;
+using ResunetBl.BL.Profile;
+using ResunetBl.General;
+using ResunetBl.Profile;
+using ResunetDal.Interfaces;
 
 namespace Resutest.Helpers
 {
     public class BaseTest
     {
         protected IAuthDAL authDAL = new AuthDAL();
-        protected IEncrypt encrypt = new Encrypt();
+        protected IEncrypt encrypt = new Resunet.Deps.Encrypt();
         protected IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
         protected IAuth authBL;
         protected IDbSessionDAL dbSessionDAL = new DbSessionDAL();

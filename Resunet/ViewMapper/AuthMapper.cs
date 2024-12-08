@@ -1,10 +1,10 @@
 ﻿using System;
-using Resunet.ViewModels;
-using Resunet.DAL.Models;
+using ResunetBl.ViewModels;
+using ResunetDal.Models;
 
-namespace Resunet.ViewMapper
+namespace ResunetBl.ViewMapper
 {
-	public static class AuthMapper
+    public static class AuthMapper
 	{
         // из RegisterViewModel будем получать модель и превращать ее в эту модель UserModel
         // и отправлять на DAL-уровень

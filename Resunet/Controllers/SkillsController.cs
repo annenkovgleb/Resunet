@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Auth;
-using Resunet.BL.Profile;
-using Resunet.DAL;
-using Resunet.DAL.Models;
-using Resunet.Middleware;
-using Resunet.ViewMapper;
-using Resunet.ViewModels;
+using ResunetBl.Auth;
+using ResunetBl.Middleware;
+using ResunetBl.Profile;
+using ResunetBl.ViewMapper;
+using ResunetBl.ViewModels;
+using ResunetDal.Interfaces;
+using ResunetDal.Models;
 
-namespace Resunet.Controllers
+namespace ResunetBl.Controllers
 {
     [SiteAuthorize()]
     public class SkillsController : Controller

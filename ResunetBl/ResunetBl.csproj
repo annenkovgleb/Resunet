@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="9.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\ResunetDal\ResunetDal.csproj">
+			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+
+</Project>

@@ -4,7 +4,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
-namespace Resunet.Service
+namespace ResunetBl.Service
 {
     public class WebFile
     {

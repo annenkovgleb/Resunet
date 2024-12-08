@@ -1,7 +1,7 @@
-﻿using Resunet.DAL.Models;
-using Resunet.ViewModels;
+﻿using ResunetBl.ViewModels;
+using ResunetDal.Models;
 
-namespace Resunet.ViewMapper
+namespace ResunetBl.ViewMapper
 {
     public static class ProfileMapper
     {

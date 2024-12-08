@@ -1,6 +1,7 @@
 ﻿using Resutest.Helpers;
 using System.Transactions;
-using Resunet.BL;
+using ResunetBl.Auth;
+using ResunetBl.Exeption;
 
 namespace Resutest
 {
@@ -20,7 +21,7 @@ namespace Resutest
 
                 // create user
                 int userId = await authBL.CreateUser(
-                    new Resunet.DAL.Models.UserModel()
+                    new ResunetBl.DAL.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"
@@ -31,14 +32,35 @@ namespace Resutest
                 Assert.Throws<AuthorizationException>(delegate { authBL.Authenticate(email, "111", false).GetAwaiter().GetResult(); });
                 await authBL.Authenticate(email, "qwer1234", false);
 
-                string? authCookie = this.webCookie.Get(Resunet.BL.Auth.AuthConstants.SessionCookieName);
+                string? authCookie = this.webCookie.Get(AuthConstants.SessionCookieName);
                 Assert.NotNull(authCookie);
 
-                string? rememberMeCookie = this.webCookie.Get(Resunet.BL.Auth.AuthConstants.RememberMeCookieName);
+                string? rememberMeCookie = this.webCookie.Get(AuthConstants.RememberMeCookieName);
                 Assert.Null(rememberMeCookie);
             }
         }
 
+        public async Task RemoveMeTest()
+        {
+            using (TransactionScope scope = Helper.CreateTransactionScope())
+            {
+                string email = Guid.NewGuid().ToString() + "@test.com";
 
+                int userId = await authBL.CreateUser(
+                    new ResunetBl.DAL.Models.UserModel()
+                    {
+                        Email = email,
+                        Password = "qwer1234"
+                    });
+
+                await authBL.Authenticate(email,"qwer1234",true);
+
+                string? authCookie = this.webCookie.Get(AuthConstants.SessionCookieName);
+                Assert.NotNull(authCookie);
+
+                string? rememberMeCookie = this.webCookie.Get(AuthConstants.RememberMeCookieName);
+                Assert.Null(rememberMeCookie);
+            }
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Auth;
+using ResunetBl.Auth;
 
-namespace Resunet.Middleware
+namespace ResunetBl.Middleware
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public class SiteNotAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter

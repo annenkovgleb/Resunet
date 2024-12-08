@@ -1,7 +1,7 @@
 create table if not exists DbSession (
-	DbSessionId uuid primary key, -- uuid - 16 байтный уникальный индификатор
-	SessionData text, -- будем сохранять любые данные
-	Created timestamp, -- когда создана
-	LastAccessed timestamp, -- когда добирались, для того, чтобы увидеть сессию
+	DbSessionId uuid primary key, -- uuid - 16 byte unique identifier
+	SessionData text, -- for saving any data 
+	Created timestamp, 
+	LastAccessed timestamp,
 	UserId int
-)
+);

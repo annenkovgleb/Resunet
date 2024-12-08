@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
-using Resunet.BL.Auth;
+using ResunetBl.Auth;
 
-namespace Resunet.Middleware
+namespace ResunetBl.Middleware
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     // этот тег требует, чтобы пользователь был авторизован для доступа к методу (к Profile)

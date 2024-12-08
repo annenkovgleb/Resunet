@@ -9,23 +9,18 @@
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
 	<ItemGroup>
-		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
-		<PackageReference Include="Npgsql" Version="7.0.2" />
-		<PackageReference Include="Dapper" Version="2.0.123" />
 		<PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="BL\Resume\" />
-		<None Remove="Views\Resume\" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="BL\Resume\" />
-		<Folder Include="Views\Resume\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\ResunetUI\ResunetUI.csproj">
 			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ResunetBl\ResunetBl.csproj">
+			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+		</ProjectReference>
+	</ItemGroup>
+
 </Project>

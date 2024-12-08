@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Resunet.BL.Auth;
-using Resunet.BL.Resume;
-using Resunet.Models;
+using ResunetBl.Auth;
+using ResunetBl.Models;
+using ResunetBl.Resume;
 
-namespace Resunet.Controllers;
+namespace ResunetBl.Controllers;
 
 public class HomeController : Controller
 {

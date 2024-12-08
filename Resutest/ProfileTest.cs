@@ -11,7 +11,7 @@ namespace Resutest
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
                 await profile.AddOrUpdate(
-                    new Resunet.DAL.Models.ProfileModel()
+                    new ResunetBl.DAL.Models.ProfileModel()
                     {
                         UserId = 19,
                         FirstName = "Иван",
@@ -35,7 +35,7 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                var profileModel = new Resunet.DAL.Models.ProfileModel()
+                var profileModel = new ResunetBl.DAL.Models.ProfileModel()
                 {
                     UserId = 19,
                     FirstName = "Иван",

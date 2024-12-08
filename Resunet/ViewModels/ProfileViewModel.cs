@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Resunet.ViewModels
+namespace ResunetBl.ViewModels
 {
     public class ProfileViewModel
     {

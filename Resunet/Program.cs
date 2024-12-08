@@ -1,23 +1,30 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using ResunetBl.Auth;
+using ResunetBl.General;
+using ResunetBl.Profile;
+using ResunetBl.Resume;
+using ResunetDal.Implementations;
+using ResunetDal.Interfaces;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<Resunet.DAL.IAuthDAL, Resunet.DAL.AuthDAL>();
-builder.Services.AddSingleton<Resunet.DAL.IDbSessionDAL, Resunet.DAL.DbSessionDAL>();
-builder.Services.AddSingleton<Resunet.DAL.IUserTokenDAL, Resunet.DAL.UserTokenDAL>();
-builder.Services.AddSingleton<Resunet.DAL.IProfileDAL, Resunet.DAL.ProfileDAL>();
-builder.Services.AddSingleton<Resunet.DAL.ISkillDAL, Resunet.DAL.SkillDAL>();
+builder.Services.AddSingleton<IAuthDAL, AuthDAL>();
+builder.Services.AddSingleton<IDbSessionDAL, DbSessionDAL>();
+builder.Services.AddSingleton<IUserTokenDAL, UserTokenDAL>();
+builder.Services.AddSingleton<IProfileDAL, ProfileDAL>();
+builder.Services.AddSingleton<ISkillDAL, SkillDAL>();
 
-builder.Services.AddTransient<Resunet.BL.Auth.IAuth, Resunet.BL.Auth.Auth>();
-builder.Services.AddSingleton<Resunet.BL.Auth.IEncrypt, Resunet.BL.Auth.Encrypt>();
-builder.Services.AddScoped<Resunet.BL.Auth.ICurrentUser, Resunet.BL.Auth.CurrentUser>(); // хранение состояния 
+builder.Services.AddTransient<IAuth, Auth>();
+builder.Services.AddSingleton<IEncrypt, Resunet.Deps.Encrypt>();
+builder.Services.AddScoped<ICurrentUser, CurrentUser>(); // хранение состояния 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<Resunet.BL.Auth.IDbSession, Resunet.BL.Auth.DbSession>(); // хранение состояния 
-builder.Services.AddScoped<Resunet.BL.General.IWebCookie, Resunet.BL.General.WebCookie>();
-builder.Services.AddSingleton<Resunet.BL.Profile.IProfile, Resunet.BL.Profile.Profile>();
-builder.Services.AddSingleton<Resunet.BL.Resume.IResume, Resunet.BL.Resume.Resume>();
-builder.Services.AddSingleton<Resunet.BL.Profile.ISkill, Resunet.BL.Profile.Skill>();
+builder.Services.AddScoped<IDbSession, DbSession>(); // хранение состояния 
+builder.Services.AddScoped<IWebCookie, Resunet.Deps.WebCookie>();
+builder.Services.AddSingleton<IProfile, Profile>();
+builder.Services.AddSingleton<IResume, Resume>();
+builder.Services.AddSingleton<ISkill, Skill>();
 
 // для сессии нужен дата провайдер
 builder.Services.AddMvc();
@@ -28,6 +35,7 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+    app.UseWebAssemblyDebugging();
 }
 
 app.UseHttpsRedirection();
@@ -37,8 +45,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseBlazorFrameworkFiles();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+

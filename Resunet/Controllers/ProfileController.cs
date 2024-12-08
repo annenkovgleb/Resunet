@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Resunet.ViewModels;
-using Resunet.Service;
-using Resunet.Middleware;
-using Resunet.BL.Auth;
-using Resunet.BL.Profile;
-using Resunet.ViewMapper;
-using Resunet.DAL.Models;
+using ResunetBl.ViewModels;
+using ResunetBl.Service;
+using ResunetBl.Middleware;
+using ResunetBl.ViewMapper;
+using ResunetBl.Auth;
+using ResunetBl.Profile;
+using ResunetDal.Models;
 
-namespace Resunet.Controllers
+namespace ResunetBl.Controllers
 {
     [SiteAuthorize()]
     public class ProfileController : Controller
