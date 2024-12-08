@@ -1,7 +1,7 @@
-﻿using ResunetBl.BL;
-using ResunetBl.General;
+﻿using ResunetBl.General;
 using ResunetDal.Models;
 using ResunetDal.Interfaces;
+using ResunetBl.Exeption;
 
 namespace ResunetBl.Auth
 {
