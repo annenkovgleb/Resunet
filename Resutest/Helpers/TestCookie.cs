@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using ResunetBl.General;
+﻿using ResunetBl.General;
 
 namespace Resutest.Helpers
 {

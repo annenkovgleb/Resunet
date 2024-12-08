@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using ResunetBl.Auth;
-using ResunetBl.BL.Profile;
-using ResunetBl.General;
 using ResunetBl.Profile;
+using ResunetBl.General;
 using ResunetDal.Interfaces;
+using ResunetDal.Implementations;
 
 namespace Resutest.Helpers
 {

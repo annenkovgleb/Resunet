@@ -1,6 +1,4 @@
-﻿using System;
-using ResunetBl.BL;
-using Resutest.Helpers;
+﻿using Resutest.Helpers;
 using System.Transactions;
 using ResunetBl.Auth;
 
@@ -39,7 +37,7 @@ namespace Resutest
 
             // create user
             int userId = await authBL.CreateUser(
-                new ResunetBl.DAL.Models.UserModel()
+                new ResunetDal.Models.UserModel()
                 {
                     Email = email,
                     Password = "qwer1234"
