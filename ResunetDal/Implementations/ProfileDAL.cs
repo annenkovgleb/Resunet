@@ -1,5 +1,4 @@
-﻿using ResunetDal;
-using ResunetDal.Interfaces;
+﻿using ResunetDal.Interfaces;
 using ResunetDal.Models;
 
 namespace ResunetDal.Implementations
@@ -8,15 +7,15 @@ namespace ResunetDal.Implementations
     {
         public async Task<int> Add(ProfileModel profile)
         {
-            string sql = @"insert into Profile(UserId, ProfileName, FirstName, LastName, ProfileImage)
-                    values(@UserId, @ProfileName, @FirstName, @LastName, @ProfileImage) returning ProfileId";
+            string sql = @"insert into Profile(UserId, ProfileName, FirstName, LastName, ProfileImage, ProfileStatus)
+                    values(@UserId, @ProfileName, @FirstName, @LastName, @ProfileImage, @ProfileStatus) returning ProfileId";
             return await DbHelper.QueryScalarAsync<int>(sql, profile);
         }
 
         public async Task<IEnumerable<ProfileModel>> GetByUserId(int userId)
         {
             return await DbHelper.QueryAsync<ProfileModel>(@"
-                        select 	ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage 
+                        select 	ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage, ProfileStatus
                         from Profile
                         where UserId = @id", new { id = userId });
         }
@@ -24,7 +23,7 @@ namespace ResunetDal.Implementations
         public async Task<ProfileModel> GetByProfileId(int profileId)
         {
             return await DbHelper.QueryScalarAsync<ProfileModel>(@"
-                        select 	ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage 
+                        select 	ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage, ProfileStatus
                         from Profile
                         where ProfileId = @profileId", new { profileId });
         }
@@ -35,7 +34,8 @@ namespace ResunetDal.Implementations
                     set ProfileName = @ProfileName,
                         FirstName = @FirstName,
                         LastName = @LastName,
-                        ProfileImage = @ProfileImage
+                        ProfileImage = @ProfileImage,
+                        ProfileStatus = @ProfileStatus
                     where ProfileId = @ProfileId";
             await DbHelper.ExecuteAsync(sql, profile);
         }
@@ -43,11 +43,12 @@ namespace ResunetDal.Implementations
         public async Task<IEnumerable<ProfileModel>> Search(int top)
         {
             return await DbHelper.QueryAsync<ProfileModel>(@$"
-                        select ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage 
+                        select ProfileId, UserId, ProfileName, FirstName, LastName, ProfileImage
                         from Profile
+                        where ProfileStatus = @profileStatus
                         order by 1 desc
                         limit @top 
-                        ", new { top });
+                        ", new { top = top, profileStatus = ProfileStatusEnum.Public });
         }
     }
 }

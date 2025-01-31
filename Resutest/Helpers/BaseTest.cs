@@ -19,7 +19,6 @@ namespace Resutest.Helpers
         protected IProfileDAL profileDAL = new ProfileDAL();
         protected IUserTokenDAL userTokenDAL = new UserTokenDAL();
         protected IProfile profile;
-
         protected CurrentUser currentUser;
 
         public BaseTest()

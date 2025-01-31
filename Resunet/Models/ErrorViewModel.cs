@@ -1,4 +1,4 @@
-﻿namespace ResunetBl.Models;
+﻿namespace Resunet.Models;
 
 public class ErrorViewModel
 {

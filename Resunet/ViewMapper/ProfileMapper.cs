@@ -7,13 +7,14 @@ namespace ResunetBl.ViewMapper
     {
         public static ProfileModel MapProfileViewModelToProfileModel(ProfileViewModel model)
         {
-            // этом маппере должны быть только те поля, которые user может ввести в UI
+            // в этом маппере должны быть только те поля, которые user может ввести в UI
             return new ProfileModel()
             {
                 ProfileId = model.ProfileId,
                 ProfileName = model.ProfileName,
                 FirstName = model.FirstName,
-                LastName = model.LastName
+                LastName = model.LastName,
+                ProfileStatus = model.ProfileStatus
             };
         }
 
@@ -26,7 +27,8 @@ namespace ResunetBl.ViewMapper
                 ProfileName = model.ProfileName,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                ProfileImage = model.ProfileImage
+                ProfileImage = model.ProfileImage,
+                ProfileStatus = model.ProfileStatus
             };
         }
     }

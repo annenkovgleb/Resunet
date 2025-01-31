@@ -16,12 +16,12 @@ builder.Services.AddSingleton<IUserTokenDAL, UserTokenDAL>();
 builder.Services.AddSingleton<IProfileDAL, ProfileDAL>();
 builder.Services.AddSingleton<ISkillDAL, SkillDAL>();
 
-builder.Services.AddTransient<IAuth, Auth>();
-builder.Services.AddSingleton<IEncrypt, Resunet.Deps.Encrypt>();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>(); // хранение состояния 
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IDbSession, DbSession>(); // хранение состояния 
 builder.Services.AddScoped<IWebCookie, Resunet.Deps.WebCookie>();
+builder.Services.AddTransient<IAuth, Auth>();
+builder.Services.AddSingleton<IEncrypt, Resunet.Deps.Encrypt>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IProfile, Profile>();
 builder.Services.AddSingleton<IResume, Resume>();
 builder.Services.AddSingleton<ISkill, Skill>();

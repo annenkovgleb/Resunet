@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ResunetBl.Auth;
-using ResunetBl.Models;
 using ResunetBl.Resume;
+using Resunet.Models;
 
 namespace ResunetBl.Controllers;
 

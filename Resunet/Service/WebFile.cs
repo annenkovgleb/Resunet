@@ -12,9 +12,7 @@ namespace ResunetBl.Service
 
         public WebFile() { }
 
-
         // изменить имя файла, если превышает кол-во символов 
-
 
         public string GetWebFilename(string filename)
         {

@@ -1,5 +1,4 @@
-﻿using ResunetDal;
-using ResunetDal.Interfaces;
+﻿using ResunetDal.Interfaces;
 using ResunetDal.Models;
 
 namespace ResunetDal.Implementations
@@ -8,7 +7,7 @@ namespace ResunetDal.Implementations
     {
         public async Task Create(SessionModel model)
         {
-            string sql = @" insert into DbSession (DbSessionID, SessionData, Created, LastAccessed, UserId)
+            string sql = @"insert into DbSession (DbSessionID, SessionData, Created, LastAccessed, UserId)
                 values (@DbSessionID, @SessionData, @Created, @LastAccessed, @UserId)";
             await DbHelper.ExecuteAsync(sql, model);
         }
