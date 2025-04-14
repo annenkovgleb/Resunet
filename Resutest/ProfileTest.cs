@@ -3,7 +3,7 @@ using Resutest.Helpers;
 
 namespace Resutest
 {
-    public class ProfileTest : Helpers.BaseTest
+    public class ProfileTest : BaseTest
     {
         [Test]
         public async Task AddTest()

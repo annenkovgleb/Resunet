@@ -1,7 +1,7 @@
-﻿using ResunetBl.ViewModels;
+﻿using Resunet.ViewModels;
 using ResunetDAL.Models;
 
-namespace ResunetBl.ViewMapper
+namespace Resunet.ViewMapper
 {
     public class SkillMapper
     {

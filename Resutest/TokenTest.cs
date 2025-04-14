@@ -3,15 +3,15 @@ using Resutest.Helpers;
 
 namespace Resutest
 {
-    public class TokenTest : Helpers.BaseTest
+    public class TokenTest : BaseTest
     {
         [Test]
         public async Task BaseTokenTest()
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                var tokenId = await this.userTokenDAL.Create(10);
-                var userid = await this.userTokenDAL.Get(tokenId);
+                var tokenId = await userTokenDAL.Create(10);
+                var userid = await userTokenDAL.Get(tokenId);
                 Assert.That(userid, Is.EqualTo(10));
             }
         }

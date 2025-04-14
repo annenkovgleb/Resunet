@@ -5,24 +5,18 @@ using ResunetDAL.Interfaces;
 
 namespace ResunetBl.Auth
 {
-    public class DbSession : IDbSession
+    public class DbSession(
+        IDbSessionDAL _sessionDAL,
+        IWebCookie _webCookie)
+        : IDbSession
     {
-        private readonly IDbSessionDAL sessionDAL;
-        private readonly IWebCookie webCookie;
-
-        private SessionModel? sessionModel = null;
-        private Dictionary<string, object> SessionData = new Dictionary<string, object>();
-
-        public DbSession(IDbSessionDAL sessionDAL, IWebCookie webCookie)
-        {
-            this.sessionDAL = sessionDAL;
-            this.webCookie = webCookie;
-        }
+        private SessionModel? sessionModel;
+        private Dictionary<string, object> SessionData = new();
 
         private void CreateSessionCookie(Guid sessionid)
         {
-            webCookie.Delete(AuthConstants.SessionCookieName);
-            webCookie.AddSecure(AuthConstants.SessionCookieName, sessionid.ToString());
+            _webCookie.Delete(AuthConstants.SessionCookieName);
+            _webCookie.AddSecure(AuthConstants.SessionCookieName, sessionid.ToString());
         }
 
         private async Task<SessionModel> CreateSession()
@@ -34,7 +28,7 @@ namespace ResunetBl.Auth
                 LastAccessed = DateTime.Now
             };
 
-            await sessionDAL.Create(data);
+            await _sessionDAL.Create(data);
             return data;
         }
 
@@ -44,13 +38,13 @@ namespace ResunetBl.Auth
                 return sessionModel;
 
             Guid sessionId;
-            var sessionString = webCookie.Get(AuthConstants.SessionCookieName);
+            var sessionString = _webCookie.Get(AuthConstants.SessionCookieName);
             if (sessionString != null)
                 sessionId = Guid.Parse(sessionString);
             else
                 sessionId = Guid.NewGuid();
 
-            var data = await sessionDAL.Get(sessionId);
+            var data = await _sessionDAL.Get(sessionId);
             if (data == null)
             {
                 data = await CreateSession();
@@ -59,16 +53,17 @@ namespace ResunetBl.Auth
 
             sessionModel = data;
             if (data.SessionData != null)
-                SessionData = JsonSerializer.Deserialize<Dictionary<string, object>>(data.SessionData) ?? new Dictionary<string, object>();
+                SessionData = JsonSerializer.Deserialize<Dictionary<string, object>>(data.SessionData) ??
+                              new Dictionary<string, object>();
 
-            await sessionDAL.Extend(data.DbSessionId);
+            await _sessionDAL.Extend(data.DbSessionId);
             return data;
         }
 
         public async Task UpdateSessionData()
         {
             if (sessionModel != null)
-                await sessionDAL.Update(sessionModel.DbSessionId, JsonSerializer.Serialize(SessionData));
+                await _sessionDAL.Update(sessionModel.DbSessionId, JsonSerializer.Serialize(SessionData));
             else throw new Exception("Сессия не загружена");
         }
 
@@ -88,12 +83,12 @@ namespace ResunetBl.Auth
 
         public async Task SetUserId(int userId)
         {
-            var data = await GetSession(); // ожидается сессия
+            var data = await GetSession(); 
             data.UserId = userId;
-            data.DbSessionId = Guid.NewGuid(); // новая сессия
+            data.DbSessionId = Guid.NewGuid(); 
             CreateSessionCookie(data.DbSessionId);
             data.SessionData = JsonSerializer.Serialize(SessionData);
-            await sessionDAL.Create(data);
+            await _sessionDAL.Create(data);
         }
 
         public async Task<int?> GetUserId()
@@ -111,7 +106,7 @@ namespace ResunetBl.Auth
         public async Task Lock()
         {
             var data = await GetSession();
-            await sessionDAL.Lock(data.DbSessionId);
+            await _sessionDAL.Lock(data.DbSessionId);
         }
 
         // хелпер, только для тестов, чтобы пошел и проверил в бд

@@ -27,7 +27,7 @@ namespace Resutest.Helpers
             dbSession = new DbSession(dbSessionDAL, webCookie);
             authBL = new Auth(authDAL, encrypt, webCookie, dbSession, userTokenDAL);
             currentUser = new CurrentUser(dbSession, webCookie, userTokenDAL, profileDAL);
-            profile = new Profile(profileDAL);
+            // profile = new Profile(profileDAL);
         }
     }
 }

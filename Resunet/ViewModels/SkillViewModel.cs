@@ -1,4 +1,4 @@
-﻿namespace ResunetBl.ViewModels
+﻿namespace Resunet.ViewModels
 {
     public class SkillViewModel
     {

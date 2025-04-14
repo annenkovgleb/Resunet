@@ -4,7 +4,7 @@ using ResunetBl.Auth;
 
 namespace Resutest
 {
-    public class CurrentUserTest : Helpers.BaseTest
+    public class CurrentUserTest : BaseTest
     {
         [Test]
         public async Task BaseRegistrationTest()

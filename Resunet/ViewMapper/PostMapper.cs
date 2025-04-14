@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace Resunet.ViewMapper
 {
-    public static  class PostMapper
+    public static class PostMapper
     {
         public static PostModel MapPostViewModelToPostModel(PostViewModel viewModel)
         {
@@ -27,16 +27,16 @@ namespace Resunet.ViewMapper
             };
         }
 
-        public static IEnumerable<PostContentModel>MapPostitemViewModelToPostItemModel(IEnumerable<PostContentItemViewModel> items)
+        public static IEnumerable<PostContentModel> MapPostitemViewModelToPostItemModel(
+            IEnumerable<PostContentItemViewModel> items)
         {
-            foreach(PostContentItemViewModel model in items)
+            foreach (PostContentItemViewModel model in items)
             {
                 yield return new PostContentModel()
                 {
                     PostContentId = model.PostContentId,
                     ContentItemType = (int)model.ContentItemType,
                     Value = model.Value ?? "",
-                    // PostId = postid
                 };
             }
         }
