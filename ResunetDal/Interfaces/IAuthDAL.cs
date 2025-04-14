@@ -1,13 +1,12 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetDal.Interfaces
+namespace ResunetDAL.Interfaces;
+
+public interface IAuthDAL
 {
-    public interface IAuthDAL
-    {
-        // поиск будет по email и id
-        Task<UserModel> GetUser(string email);
-        Task<UserModel> GetUser(int id);
-        Task<int> CreateUser(UserModel model); // возвращает id созданного пользователя 
-    }
+    // поиск будет по email и id
+    Task<UserModel> GetUser(string email);
+    Task<UserModel> GetUser(int id);
+    Task<int> CreateUser(UserModel model); // возвращает id созданного пользователя 
 }
 

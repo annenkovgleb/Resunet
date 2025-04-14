@@ -1,6 +1,6 @@
 ﻿using ResunetBl.General;
-using ResunetDal.Models;
-using ResunetDal.Interfaces;
+using ResunetDAL.Models;
+using ResunetDAL.Interfaces;
 using ResunetBl.Exeption;
 
 namespace ResunetBl.Auth

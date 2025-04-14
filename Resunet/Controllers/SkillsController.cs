@@ -4,8 +4,8 @@ using ResunetBl.Middleware;
 using ResunetBl.Profile;
 using ResunetBl.ViewMapper;
 using ResunetBl.ViewModels;
-using ResunetDal.Interfaces;
-using ResunetDal.Models;
+using ResunetDAL.Interfaces;
+using ResunetDAL.Models;
 
 namespace ResunetBl.Controllers
 {

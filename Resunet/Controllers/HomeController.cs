@@ -15,8 +15,7 @@ public class HomeController : Controller
     public HomeController(
         ILogger<HomeController> logger, 
         ICurrentUser currentUser, 
-        IResume resume
-        )
+        IResume resume)
     {
         this.logger = logger;
         this.currentUser = currentUser;

@@ -1,5 +1,5 @@
 ﻿using ResunetBl.ViewModels;
-using ResunetDal.Models;
+using ResunetDAL.Models;
 
 namespace ResunetBl.ViewMapper
 {

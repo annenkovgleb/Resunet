@@ -1,8 +1,7 @@
-﻿namespace ResunetDal.Interfaces
+﻿namespace ResunetDAL.Interfaces;
+
+public interface IUserTokenDAL
 {
-    public interface IUserTokenDAL
-    {
-        Task<Guid> Create(int userId);
-        Task<int?> Get(Guid tokenId);
-    }
+    Task<Guid> Create(int userId);
+    Task<int?> Get(Guid tokenId);
 }

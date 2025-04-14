@@ -13,7 +13,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-		<ProjectReference Include="..\ResunetDal\ResunetDal.csproj">
+		<ProjectReference Include="..\ResunetDal\ResunetDAL.csproj">
 			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>

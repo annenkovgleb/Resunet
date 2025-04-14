@@ -1,17 +1,16 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetDal.Interfaces
+namespace ResunetDAL.Interfaces;
+
+public interface ISkillDAL
 {
-    public interface ISkillDAL
-    {
-        Task<int> Create(string skillname);
+    Task<int> Create(string skillname);
 
-        Task<IEnumerable<SkillModel>> Search(int top, string skillname);
+    Task<IEnumerable<SkillModel>> Search(int top, string skillname);
 
-        Task<SkillModel> Get(string skillname);
+    Task<SkillModel> Get(string skillname);
 
-        Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId);
+    Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId);
 
-        Task<int> AddProfileSkill(ProfileSkillModel model);
-    }
+    Task<int> AddProfileSkill(ProfileSkillModel model);
 }

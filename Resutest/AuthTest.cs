@@ -21,7 +21,7 @@ namespace Resutest
 
                 // create user
                 int userId = await authBL.CreateUser(
-                    new ResunetDal.Models.UserModel()
+                    new ResunetDAL.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"
@@ -47,7 +47,7 @@ namespace Resutest
                 string email = Guid.NewGuid().ToString() + "@test.com";
 
                 int userId = await authBL.CreateUser(
-                    new ResunetDal.Models.UserModel()
+                    new ResunetDAL.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"

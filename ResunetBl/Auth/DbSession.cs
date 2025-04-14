@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using ResunetBl.General;
-using ResunetDal.Models;
-using ResunetDal.Interfaces;
+using ResunetDAL.Models;
+using ResunetDAL.Interfaces;
 
 namespace ResunetBl.Auth
 {

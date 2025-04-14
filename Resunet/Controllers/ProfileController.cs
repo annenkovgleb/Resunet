@@ -5,7 +5,7 @@ using ResunetBl.Middleware;
 using ResunetBl.ViewMapper;
 using ResunetBl.Auth;
 using ResunetBl.Profile;
-using ResunetDal.Models;
+using ResunetDAL.Models;
 
 namespace ResunetBl.Controllers
 {

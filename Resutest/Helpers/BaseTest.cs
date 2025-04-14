@@ -2,8 +2,8 @@
 using ResunetBl.Auth;
 using ResunetBl.Profile;
 using ResunetBl.General;
-using ResunetDal.Interfaces;
-using ResunetDal.Implementations;
+using ResunetDAL.Interfaces;
+using ResunetDAL.Implementations;
 
 namespace Resutest.Helpers
 {

@@ -1,13 +1,12 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetDal.Interfaces
+namespace ResunetDAL.Interfaces;
+
+public interface IProfileDAL
 {
-    public interface IProfileDAL
-    {
-        Task<IEnumerable<ProfileModel>> GetByUserId(int userId);
-        Task<ProfileModel> GetByProfileId(int userId);
-        Task<int> Add(ProfileModel profile);
-        Task Update(ProfileModel profile);
-        Task<IEnumerable<ProfileModel>> Search(int top);
-    }
+    Task<IEnumerable<ProfileModel>> GetByUserId(int userId);
+    Task<ProfileModel> GetByProfileId(int userId);
+    Task<int> Add(ProfileModel profile);
+    Task Update(ProfileModel profile);
+    Task<IEnumerable<ProfileModel>> Search(int top);
 }

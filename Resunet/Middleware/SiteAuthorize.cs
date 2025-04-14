@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Memory;
 using ResunetBl.Auth;
+using SixLabors.ImageSharp;
 
 namespace ResunetBl.Middleware
 {

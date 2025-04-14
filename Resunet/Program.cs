@@ -2,8 +2,8 @@
 using ResunetBl.General;
 using ResunetBl.Profile;
 using ResunetBl.Resume;
-using ResunetDal.Implementations;
-using ResunetDal.Interfaces;
+using ResunetDAL.Implementations;
+using ResunetDAL.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,7 @@ builder.Services.AddSingleton<IDbSessionDAL, DbSessionDAL>();
 builder.Services.AddSingleton<IUserTokenDAL, UserTokenDAL>();
 builder.Services.AddSingleton<IProfileDAL, ProfileDAL>();
 builder.Services.AddSingleton<ISkillDAL, SkillDAL>();
+builder.Services.AddSingleton<IPostDAL, PostDAL>();
 
 builder.Services.AddScoped<ICurrentUser, CurrentUser>(); // хранение состояния 
 builder.Services.AddScoped<IDbSession, DbSession>(); // хранение состояния 
@@ -25,6 +26,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IProfile, Profile>();
 builder.Services.AddSingleton<IResume, Resume>();
 builder.Services.AddSingleton<ISkill, Skill>();
+builder.Services.AddSingleton<Resunet.Data.IPost, Resunet.Data.Post>();
 
 // для сессии нужен дата провайдер
 builder.Services.AddMvc();

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ResunetDal.Models;
+using ResunetDAL.Models;
 
 namespace ResunetBl.ViewModels
 {

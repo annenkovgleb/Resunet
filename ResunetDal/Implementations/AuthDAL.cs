@@ -1,35 +1,33 @@
-﻿using ResunetDal;
-using ResunetDal.Interfaces;
-using ResunetDal.Models;
+﻿using ResunetDAL.Interfaces;
+using ResunetDAL.Models;
 
-namespace ResunetDal.Implementations
+namespace ResunetDAL.Implementations;
+
+public class AuthDAL : IAuthDAL
 {
-    public class AuthDAL : IAuthDAL
+    public async Task<UserModel> GetUser(string email)
     {
-        public async Task<UserModel> GetUser(string email)
-        {
-            var result = await DbHelper.QueryAsync<UserModel>(@"
+        var result = await DbHelper.QueryAsync<UserModel>(@"
                         select UserId, Email, Password, Salt, Status
                         from AppUser
                         where Email = @email", new { email });
-            return result.FirstOrDefault() ?? new UserModel();
-        }
+        return result.FirstOrDefault() ?? new UserModel();
+    }
 
-        public async Task<UserModel> GetUser(int id)
-        {
-            var result = await DbHelper.QueryAsync<UserModel>(@"
+    public async Task<UserModel> GetUser(int id)
+    {
+        var result = await DbHelper.QueryAsync<UserModel>(@"
                         select UserId, Email, Password, Salt, Status
                         from AppUser
                         where UserId = @id", new { id });
-            return result.FirstOrDefault() ?? new UserModel();
-        }
+        return result.FirstOrDefault() ?? new UserModel();
+    }
 
-        public async Task<int> CreateUser(UserModel model)
-        {
-            string sql = @"insert into AppUser(Email, Password, Salt, Status)
+    public async Task<int> CreateUser(UserModel model)
+    {
+        string sql = @"insert into AppUser(Email, Password, Salt, Status)
                         values(@Email, @Password, @Salt, @Status) returning UserId";
-            return await DbHelper.QueryScalarAsync<int>(sql, model);
-        }
+        return await DbHelper.QueryScalarAsync<int>(sql, model);
     }
 }
 

@@ -1,17 +1,16 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetDal.Interfaces
+namespace ResunetDAL.Interfaces;
+
+public interface IDbSessionDAL
 {
-    public interface IDbSessionDAL
-    {
-        Task<SessionModel?> Get(Guid sessionId);
+    Task<SessionModel?> Get(Guid sessionId);
 
-        Task Update(Guid dbSessionID, string sessionData);
+    Task Update(Guid dbSessionID, string sessionData);
 
-        Task Create(SessionModel model);
+    Task Create(SessionModel model);
 
-        Task Lock(Guid sessionId);
+    Task Lock(Guid sessionId);
 
-        Task Extend(Guid dbSessionID);
-    }
+    Task Extend(Guid dbSessionID);
 }
