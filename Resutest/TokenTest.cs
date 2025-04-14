@@ -10,8 +10,8 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                var tokenId = await userTokenDAL.Create(10);
-                var userid = await userTokenDAL.Get(tokenId);
+                var tokenId = await UserToken.Create(10);
+                var userid = await UserToken.Get(tokenId);
                 Assert.That(userid, Is.EqualTo(10));
             }
         }

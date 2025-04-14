@@ -2,7 +2,7 @@
 
 namespace ResunetDAL.Interfaces;
 
-public interface ISkillDAL
+public interface ISkill
 {
     Task<int> Create(string skillname);
 

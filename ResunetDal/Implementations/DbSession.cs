@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetDAL.Implementations;
 
-public class DbSessionDAL : IDbSessionDAL
+public class DbSession : IDbSession
 {
     public async Task Create(SessionModel model)
     {

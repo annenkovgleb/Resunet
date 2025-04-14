@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetDAL.Implementations;
 
-public class AuthDAL : IAuthDAL
+public class Auth : IAuth
 {
     public async Task<UserModel> GetUser(string email)
     {

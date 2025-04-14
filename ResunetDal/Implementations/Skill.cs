@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetDAL.Implementations;
 
-public class SkillDAL : ISkillDAL
+public class Skill : ISkill
 {
     public async Task<int> Create(string skillname)
     {

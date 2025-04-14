@@ -6,6 +6,8 @@ using ResunetBl.Auth;
 using ResunetBl.Profile;
 using ResunetDAL.Interfaces;
 using ResunetDAL.Models;
+using IProfile = ResunetBl.Profile.IProfile;
+using ISkill = ResunetDAL.Interfaces.ISkill;
 
 namespace Resunet.Controllers
 {
@@ -13,7 +15,7 @@ namespace Resunet.Controllers
     public class SkillsController(
         IProfile _profile,
         ICurrentUser _currentUser,
-        ISkillDAL _skill)
+        ISkill _skill)
         : Controller
     {
         public async Task<IActionResult> My()

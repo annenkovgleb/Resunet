@@ -2,7 +2,7 @@
 
 namespace ResunetDAL.Interfaces;
 
-public interface IProfileDAL
+public interface IProfile
 {
     Task<IEnumerable<ProfileModel>> GetByUserId(int userId);
     

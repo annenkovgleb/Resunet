@@ -16,7 +16,7 @@ namespace Resutest
                 var session = await this.dbSession.GetSession();
 
                 // получить сессию из бд и убедиться, что она там существует
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
 
@@ -38,7 +38,7 @@ namespace Resutest
                 var session = await this.dbSession.GetSession();
                 await this.dbSession.SetUserId(10);
 
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
                 Assert.That(dbSession!.UserId, Is.EqualTo(10));
@@ -66,7 +66,7 @@ namespace Resutest
                 await this.dbSession.SetUserId(10);
                 await this.dbSession.UpdateSessionData();
 
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
                 Assert.That(dbSession!.UserId, Is.EqualTo(10));

@@ -6,14 +6,14 @@ create table if not exists Post(
 	Intro varchar(250),
 	Created timestamp,
 	Modified timestamp,
-	Status int -- published / not
+	Status int
 );
 
 create table if not exists PostContent(
 	PostContentId serial primary key,
 	PostId int, 
 	ContentItemType int, 
-	Value text, 
+	Value text
 );
 
 create index if not exists IX_Post_UserId on Post(UserId);

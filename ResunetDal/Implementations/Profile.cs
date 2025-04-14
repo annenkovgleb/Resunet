@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetDAL.Implementations;
 
-public class ProfileDAL : IProfileDAL
+public class Profile : IProfile
 {
     public async Task<int> Add(ProfileModel profile)
     {

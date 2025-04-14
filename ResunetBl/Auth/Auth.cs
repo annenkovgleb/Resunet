@@ -6,11 +6,11 @@ using ResunetBl.Exeption;
 namespace ResunetBl.Auth
 {
     public class Auth(
-        IAuthDAL _authDAL,
+        ResunetDAL.Interfaces.IAuth auth,
         IEncrypt _encrypt,
-        IWebCookie _dbSession,
-        IDbSession _userTokenDAL,
-        IUserTokenDAL _webCookie) : IAuth
+        IWebCookie _webCookie,
+        IDbSession _dbSession,
+        IUserToken userToken) : IAuth
     {
         // IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
         // Сохранили объект, который должен умереть после каждого 
@@ -27,14 +27,14 @@ namespace ResunetBl.Auth
             user.Salt = Guid.NewGuid().ToString();
             user.Password = _encrypt.HashPassword(user.Password, user.Salt);
 
-            int id = await _authDAL.CreateUser(user);
+            int id = await auth.CreateUser(user);
             await Login(id);
             return id;
         }
 
         public async Task<int> Authenticate(string email, string password, bool rememberMe)
         {
-            var user = await _authDAL.GetUser(email);
+            var user = await auth.GetUser(email);
 
             if (user.UserId is not null && user.Password == _encrypt.HashPassword(password, user.Salt))
             {
@@ -42,7 +42,7 @@ namespace ResunetBl.Auth
 
                 if (rememberMe)
                 {
-                    Guid tokenId = await _userTokenDAL.Create(user.UserId ?? 0);
+                    Guid tokenId = await userToken.Create(user.UserId ?? 0);
                     _webCookie.AddSecure(
                         AuthConstants.RememberMeCookieName,
                         tokenId.ToString(),
@@ -57,7 +57,7 @@ namespace ResunetBl.Auth
 
         public async Task ValidateEmail(string email)
         {
-            var user = await _authDAL.GetUser(email);
+            var user = await auth.GetUser(email);
             if (user.UserId is not null)
                 throw new DublicateEmailExeption();
         }

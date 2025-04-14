@@ -2,7 +2,7 @@
 
 namespace ResunetDAL.Interfaces;
 
-public interface IPostDAL
+public interface IPost
 {
     Task<int> CreatePost(PostModel model);
 

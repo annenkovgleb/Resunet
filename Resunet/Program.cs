@@ -4,28 +4,36 @@ using ResunetBl.Profile;
 using ResunetBl.Resume;
 using ResunetDAL.Implementations;
 using ResunetDAL.Interfaces;
+using Auth = ResunetDAL.Implementations.Auth;
+using DbSession = ResunetDAL.Implementations.DbSession;
+using IAuth = ResunetDAL.Interfaces.IAuth;
+using IDbSession = ResunetDAL.Interfaces.IDbSession;
+using IProfile = ResunetDAL.Interfaces.IProfile;
+using ISkill = ResunetDAL.Interfaces.ISkill;
+using Profile = ResunetDAL.Implementations.Profile;
+using Skill = ResunetDAL.Implementations.Skill;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSingleton<IAuthDAL, AuthDAL>();
-builder.Services.AddSingleton<IDbSessionDAL, DbSessionDAL>();
-builder.Services.AddSingleton<IUserTokenDAL, UserTokenDAL>();
-builder.Services.AddSingleton<IProfileDAL, ProfileDAL>();
-builder.Services.AddSingleton<ISkillDAL, SkillDAL>();
-builder.Services.AddSingleton<IPostDAL, PostDAL>();
+builder.Services.AddSingleton<IAuth, Auth>();
+builder.Services.AddSingleton<IDbSession, DbSession>();
+builder.Services.AddSingleton<IUserToken, UserToken>();
+builder.Services.AddSingleton<IProfile, Profile>();
+builder.Services.AddSingleton<ISkill, Skill>();
+builder.Services.AddSingleton<IPost, Post>();
 
 builder.Services.AddScoped<ICurrentUser, CurrentUser>(); // хранение состояния 
-builder.Services.AddScoped<IDbSession, DbSession>(); // хранение состояния 
+builder.Services.AddScoped<ResunetBl.Auth.IDbSession, ResunetBl.Auth.DbSession>(); // хранение состояния 
 builder.Services.AddScoped<IWebCookie, Resunet.Deps.WebCookie>();
-builder.Services.AddTransient<IAuth, Auth>();
+builder.Services.AddTransient<ResunetBl.Auth.IAuth, ResunetBl.Auth.Auth>();
 builder.Services.AddSingleton<IEncrypt, Resunet.Deps.Encrypt>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddSingleton<IProfile, Profile>();
+builder.Services.AddSingleton<ResunetBl.Profile.IProfile, ResunetBl.Profile.Profile>();
 builder.Services.AddSingleton<IResume, Resume>();
-builder.Services.AddSingleton<ISkill, Skill>();
+builder.Services.AddSingleton<ResunetBl.Profile.ISkill, ResunetBl.Profile.Skill>();
 builder.Services.AddSingleton<Resunet.Data.IPost, Resunet.Data.Post>();
 
 // для сессии нужен дата провайдер

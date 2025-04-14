@@ -23,7 +23,5 @@ namespace ResunetBl.Auth
         void RemoveValue(string key);
 
         object GetValueDef(string key, object defaultValue);
-        
-        Task<Guid> Create(int userUserId);
     }
 }

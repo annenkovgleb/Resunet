@@ -1,9 +1,8 @@
-﻿using ResunetDAL;
-using ResunetDAL.Interfaces;
+﻿using ResunetDAL.Interfaces;
 
 namespace ResunetDAL.Implementations;
 
-public class UserTokenDAL : IUserTokenDAL
+public class UserToken : IUserToken
 {
     public async Task<Guid> Create(int userid)
     {

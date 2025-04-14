@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetDAL.Implementations;
 
-public class PostDAL : IPostDAL
+public class Post : IPost
 {
     public async Task<int> CreatePost(PostModel postModel)
     {

@@ -2,7 +2,7 @@
 
 namespace ResunetDAL.Interfaces;
 
-public interface IDbSessionDAL
+public interface IDbSession
 {
     Task<SessionModel?> Get(Guid sessionId);
 

@@ -7,8 +7,8 @@ namespace ResunetBl.Auth
     public class CurrentUser(
         IDbSession _dbSession,
         IWebCookie _webCookie,
-        IUserTokenDAL _userTokenDAL,
-        IProfileDAL _profileDAL)
+        IUserToken userToken,
+        IProfile profile)
         : ICurrentUser
     {
         public async Task<int?> GetUserIdByToken()
@@ -22,7 +22,7 @@ namespace ResunetBl.Auth
             if (tokenGuid is null)
                 return null;
 
-            int? userid = await _userTokenDAL.Get((Guid)tokenGuid);
+            int? userid = await userToken.Get((Guid)tokenGuid);
             return userid;
         }
 
@@ -55,7 +55,7 @@ namespace ResunetBl.Auth
                 throw new Exception("Пользователь не найден");
             }
 
-            return await _profileDAL.GetByUserId((int)userid);
+            return await profile.GetByUserId((int)userid);
         }
     }
 }

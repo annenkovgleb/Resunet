@@ -2,7 +2,7 @@
 
 namespace ResunetDAL.Interfaces;
 
-public interface IAuthDAL
+public interface IAuth
 {
     //get user by email or id
     Task<UserModel> GetUser(string email);

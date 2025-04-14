@@ -5,16 +5,16 @@ namespace Resunet.Data
 {
     public class Post : IPost
     {
-        private readonly IPostDAL postDAL;
+        private readonly ResunetDAL.Interfaces.IPost _post;
 
-        public Post(IPostDAL postDAL)
+        public Post(ResunetDAL.Interfaces.IPost post)
         {
-            this.postDAL = postDAL;
+            this._post = post;
         }
 
         public async Task<PostModel> GetPost(int postId)
         {
-            return await this.postDAL.GetPost(postId);
+            return await this._post.GetPost(postId);
         }
 
         public async Task<int> AddOrUpdate(PostModel model)
@@ -24,11 +24,11 @@ namespace Resunet.Data
             if (model.PostId == null)
             {
                 model.Created = DateTime.Now;
-                return await this.postDAL.CreatePost(model);
+                return await this._post.CreatePost(model);
             }
             else
             {
-                await this.postDAL.UpdatePost(model);
+                await this._post.UpdatePost(model);
                 return model.PostId ?? 0;
             }
 
@@ -36,7 +36,7 @@ namespace Resunet.Data
 
         public async Task<List<PostContentModel>> GetPostItems(int postId)
         {
-            var result = await this.postDAL.GetPostContent(postId);
+            var result = await this._post.GetPostContent(postId);
             return result.ToList();
         }
 
@@ -46,12 +46,12 @@ namespace Resunet.Data
             {
                 if (model.PostContentId == null)
                 {
-                    model.PostContentId = await this.postDAL.CreatePostContent(model);
+                    model.PostContentId = await this._post.CreatePostContent(model);
                 }
 
                 else
                 {
-                    await this.postDAL.UpdatePostContent(model);
+                    await this._post.UpdatePostContent(model);
                 }
             }
         }

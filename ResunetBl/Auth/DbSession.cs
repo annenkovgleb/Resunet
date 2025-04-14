@@ -6,7 +6,7 @@ using ResunetDAL.Interfaces;
 namespace ResunetBl.Auth
 {
     public class DbSession(
-        IDbSessionDAL _sessionDAL,
+        ResunetDAL.Interfaces.IDbSession session,
         IWebCookie _webCookie)
         : IDbSession
     {
@@ -28,7 +28,7 @@ namespace ResunetBl.Auth
                 LastAccessed = DateTime.Now
             };
 
-            await _sessionDAL.Create(data);
+            await session.Create(data);
             return data;
         }
 
@@ -44,7 +44,7 @@ namespace ResunetBl.Auth
             else
                 sessionId = Guid.NewGuid();
 
-            var data = await _sessionDAL.Get(sessionId);
+            var data = await session.Get(sessionId);
             if (data == null)
             {
                 data = await CreateSession();
@@ -56,14 +56,14 @@ namespace ResunetBl.Auth
                 SessionData = JsonSerializer.Deserialize<Dictionary<string, object>>(data.SessionData) ??
                               new Dictionary<string, object>();
 
-            await _sessionDAL.Extend(data.DbSessionId);
+            await session.Extend(data.DbSessionId);
             return data;
         }
 
         public async Task UpdateSessionData()
         {
             if (sessionModel != null)
-                await _sessionDAL.Update(sessionModel.DbSessionId, JsonSerializer.Serialize(SessionData));
+                await session.Update(sessionModel.DbSessionId, JsonSerializer.Serialize(SessionData));
             else throw new Exception("Сессия не загружена");
         }
 
@@ -88,7 +88,7 @@ namespace ResunetBl.Auth
             data.DbSessionId = Guid.NewGuid(); 
             CreateSessionCookie(data.DbSessionId);
             data.SessionData = JsonSerializer.Serialize(SessionData);
-            await _sessionDAL.Create(data);
+            await session.Create(data);
         }
 
         public async Task<int?> GetUserId()
@@ -106,7 +106,7 @@ namespace ResunetBl.Auth
         public async Task Lock()
         {
             var data = await GetSession();
-            await _sessionDAL.Lock(data.DbSessionId);
+            await session.Lock(data.DbSessionId);
         }
 
         // хелпер, только для тестов, чтобы пошел и проверил в бд
