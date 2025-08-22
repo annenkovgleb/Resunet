@@ -1,28 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
 using ResunetBl.Auth;
 
-namespace Resunet.Middleware;
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
-public class SiteNotAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
+namespace ResunetBl.Middleware
 {
-    public SiteNotAuthorizeAttribute()
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+    public class SiteNotAuthorizeAttribute : Attribute, IAsyncAuthorizationFilter
     {
-    }
+        public SiteNotAuthorizeAttribute() { }
 
-    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
-    {
-        ICurrentUser? currentUser = context.HttpContext.RequestServices.GetService<ICurrentUser>();
-        if (currentUser is null)
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            throw new Exception("No user middleware");
-        }
+            ICurrentUser? currentUser = context.HttpContext.RequestServices.GetService<ICurrentUser>();
+            if (currentUser == null)
+                throw new Exception("No user middleware");
 
-        bool isLoggedIn = await currentUser.IsLoggedIn();
-        if (isLoggedIn)
-        {
-            context.Result = new RedirectResult("/");
+            bool isLoggedIn = await currentUser.IsLoggedIn();
+            if (isLoggedIn == true)
+            {
+                context.Result = new RedirectResult("/");
+                return;
+            }
         }
     }
 }

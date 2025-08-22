@@ -1,33 +1,36 @@
 ﻿using System.Transactions;
 
-namespace ResunetBl.General;
-
-public static class Helpers
+namespace ResunetBl.General
 {
-    public static int? StringToIntDef(string str, int? def)
+    public static class Helpers
     {
-        int value;
-        if (int.TryParse(str, out value))
-            return value;
+        public static int? StringToIntDef(string str, int? def)
+        {
+            int value;
+            if (int.TryParse(str, out value))
+                return value;
+            return def;
+        }
 
-        return def;
+        public static Guid? StringToGuidDef(string str)
+        {
+            Guid value;
+            if (Guid.TryParse(str, out value))
+                return value;
+            return null;
+        }
+
+        /* Если мы начинаем дебажить, то транзакция на паузу не становится,
+         * пока мы дебажим и она может устареть и возникнут проблемы
+         * и для этого время нужно поставить побольше
+         */
+        public static TransactionScope CreateTransactionScope(int seconds = 6000)
+        {
+            return new TransactionScope(
+                TransactionScopeOption.Required,
+                new TimeSpan(0, 0, seconds),
+                TransactionScopeAsyncFlowOption.Enabled
+                );
+        }
     }
-
-    public static Guid? StringToGuidDef(string str)
-    {
-        Guid value;
-        if (Guid.TryParse(str, out value))
-            return value;
-        return null;
-    }
-
-    /* Если мы начинаем дебажить, то транзакция на паузу не становится,может устареть
-     * и возникнут проблемы => для этого время нужно поставить побольше время задержки  
-     */
-    public static TransactionScope CreateTransactionScope(int seconds = 6000)
-        => new TransactionScope(
-            TransactionScopeOption.Required,
-            new TimeSpan(0, 0, seconds),
-            TransactionScopeAsyncFlowOption.Enabled
-        );
 }

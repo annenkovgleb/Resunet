@@ -1,6 +1,8 @@
-﻿namespace ResunetBl.Auth;
-
-public interface IEncrypt
+﻿namespace ResunetBl.Auth
 {
-    string HashPassword(string password, string salt);
+    public interface IEncrypt
+    {
+        string HashPassword(string password, string salt);
+    }
 }
+

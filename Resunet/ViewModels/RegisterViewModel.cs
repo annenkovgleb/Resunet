@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Resunet.ViewModels
+namespace ResunetBl.ViewModels
 {
-    public class RegisterViewModel : IValidatableObject
-    {
-        //TODO: Убрать теги, использовать FluentValidation
-        [Required(ErrorMessage = "Email обязателен")]
-        [EmailAddress(ErrorMessage = "Некорректный формат")]
-        public string? Email { get; set; }
+	public class RegisterViewModel: IValidatableObject
+	{
+		[Required(ErrorMessage = "Email обязателен")]
+		[EmailAddress(ErrorMessage = "Некорректный формат")]
+		public string? Email { get; set; }
 
-        [Required(ErrorMessage = "Пароль обязателен")]
-        /*[RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{6,}$",
-            ErrorMessage = "Пароль слишком простой")]*/
+		[Required(ErrorMessage = "Пароль обязателен")]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*-]).{8,}$",
+                ErrorMessage = "Пароль слишком простой")]
         public string? Password { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -23,3 +22,4 @@ namespace Resunet.ViewModels
         }
     }
 }
+

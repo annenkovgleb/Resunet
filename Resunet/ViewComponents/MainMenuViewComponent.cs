@@ -1,13 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ResunetBl.Auth;
 
-namespace Resunet.ViewComponents;
-
-public class MainMenuViewComponent(ICurrentUser currentUser) : ViewComponent
+namespace ResunetBl.ViewComponents
 {
-    public async Task<IViewComponentResult> InvokeAsync()
+    public class MainMenuViewComponent : ViewComponent
     {
-        bool isLoggedIn = await currentUser.IsLoggedIn();
-        return View("Index", isLoggedIn);
+        private readonly ICurrentUser currentUser;
+        
+        public MainMenuViewComponent(ICurrentUser currentUser)
+        {
+            this.currentUser = currentUser;
+        }
+
+        public async Task<IViewComponentResult> InvokeAsync()
+        {
+            bool isLoggedIn = await currentUser.IsLoggedIn();
+            return View("Index", isLoggedIn);
+        }
     }
 }

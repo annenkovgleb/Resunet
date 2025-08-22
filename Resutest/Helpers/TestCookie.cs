@@ -4,7 +4,7 @@ namespace Resutest.Helpers
 {
     public class TestCookie : IWebCookie
     {
-        Dictionary<string, string> cookies = new();
+        Dictionary<string, string> cookies = new Dictionary<string, string>();
 
         public void Add(string cookieName, string value, int days = 0)
         {

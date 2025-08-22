@@ -4,7 +4,7 @@ using ResunetBl.Auth;
 
 namespace Resutest
 {
-    public class CurrentUserTest : BaseTest
+    public class CurrentUserTest : Helpers.BaseTest
     {
         [Test]
         public async Task BaseRegistrationTest()
@@ -35,8 +35,9 @@ namespace Resutest
         {
             string email = Guid.NewGuid().ToString() + "@test.com";
 
+            // create user
             int userId = await authBL.CreateUser(
-                new ResunetDAL.Models.UserModel()
+                new ResunetDal.Models.UserModel()
                 {
                     Email = email,
                     Password = "qwer1234"

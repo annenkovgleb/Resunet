@@ -3,7 +3,7 @@ using Resutest.Helpers;
 
 namespace Resutest
 {
-    public class ProfileTest : BaseTest
+    public class ProfileTest : Helpers.BaseTest
     {
         [Test]
         public async Task AddTest()
@@ -11,7 +11,7 @@ namespace Resutest
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
                 await profile.AddOrUpdate(
-                    new ResunetDAL.Models.ProfileModel()
+                    new ResunetDal.Models.ProfileModel()
                     {
                         UserId = 19,
                         FirstName = "Иван",
@@ -35,7 +35,7 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                var profileModel = new ResunetDAL.Models.ProfileModel()
+                var profileModel = new ResunetDal.Models.ProfileModel()
                 {
                     UserId = 19,
                     FirstName = "Иван",

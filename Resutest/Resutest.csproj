@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
-		<LangVersion>default</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,11 +19,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ResunetDal\ResunetDAL.csproj" />
+		<ProjectReference Include="..\ResunetDal\ResunetDal.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ResunetBl\ResunetBL.csproj">
+		<ProjectReference Include="..\ResunetBl\ResunetBl.csproj">
 			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>

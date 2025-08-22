@@ -3,7 +3,7 @@
 
 <PageTitle>Мои скилы</PageTitle>
 
-@if (skills is null)
+@if (skills == null)
 {
     <p><em>Идёт загрузка скилов...</em></p>
 }
@@ -20,17 +20,18 @@ else
                     <td>
                         @skillNames[skill.Level]
                     </td>
+                    <td></td>
                 </tr>
                 }
             }
             <tr>
                 <td class="autocomplete">
                     <input type="text" @bind="editItem.Name" @oninput="Filter" @onblur="CancelFilter" />
-                    @if (skilldict is not null) {
+                    @if (skilldict != null) {
                         <ul class="options">
                         @foreach (var skill in skilldict)
                         {
-                            <li @onclick="() => SelectItem(skill)" value="@skill">@skill</li>
+                            <li @onclick="() => SeelctItem(skill)" value="@skill">@skill</li>
                         }
                         </ul>
                     }
@@ -57,8 +58,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<List<Skill>>("/skills/my");
-        if (result is not null)
+        var result = await Http.GetFromJsonAsync<List<Skill>>("skills/my");
+        if (result != null)
             skills = result.ToList();
     }
 
@@ -71,7 +72,7 @@ else
             skilldict = null;
     }
 
-    protected void SelectItem(string skillname)
+    protected void SeelctItem(string skillname)
     {
         this.editItem.Name = skillname;
         this.skilldict = null;

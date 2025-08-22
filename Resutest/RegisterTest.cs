@@ -17,13 +17,15 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
+                // Guid - для генерации новых пользователей
                 string email = Guid.NewGuid().ToString() + "@test.com";
 
                 // validate : should not be in the DB
                 authBL.ValidateEmail(email).GetAwaiter().GetResult();
 
+                // create user
                 int userId = await authBL.CreateUser(
-                    new ResunetDAL.Models.UserModel()
+                    new ResunetDal.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"
@@ -31,10 +33,10 @@ namespace Resutest
 
                 Assert.Greater(userId, 0);
 
-                var userByEmailDalResult = await Auth.GetUser(email);
+                var userByEmailDalResult = await authDAL.GetUser(email);
                 Assert.That(email, Is.EqualTo(userByEmailDalResult.Email));
 
-                var userDalResult = await Auth.GetUser(userId);
+                var userDalResult = await authDAL.GetUser(userId);
                 Assert.That(email, Is.EqualTo(userDalResult.Email));
 
                 Assert.IsNotNull(userDalResult.Salt);

@@ -1,15 +1,18 @@
-﻿using Resunet.ViewModels;
-using ResunetDAL.Models;
+﻿using ResunetBl.ViewModels;
+using ResunetDal.Models;
 
-namespace Resunet.ViewMapper;
-
-public class SkillMapper
+namespace ResunetBl.ViewMapper
 {
-    public static ProfileSkillModel MapSkillViewModelToProfileSkillModel(SkillViewModel model)
-        => new ProfileSkillModel()
+    public class SkillMapper
+    {
+        public static ProfileSkillModel MapSkillViewModelToProfileSkillModel(SkillViewModel model)
         {
-            SkillName = model.Name,
-            Level = model.Level,
-            ProfileId = model.ProfileId
-        };
+            return new ProfileSkillModel()
+            {
+                SkillName = model.Name,
+                Level = model.Level,
+                ProfileId = model.ProfileId
+            };
+        }
+    }
 }

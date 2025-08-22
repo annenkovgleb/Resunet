@@ -7,15 +7,21 @@ namespace Resutest
 {
     public class AuthTest : BaseTest
     {
+        [SetUp]
+        public void Setup()
+        {
+        }
+
         [Test]
         public async Task AuthRegistrationTest()
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                string email = Guid.NewGuid() + "@test.com";
+                string email = Guid.NewGuid().ToString() + "@test.com";
 
+                // create user
                 int userId = await authBL.CreateUser(
-                    new ResunetDAL.Models.UserModel()
+                    new ResunetDal.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"
@@ -26,10 +32,10 @@ namespace Resutest
                 Assert.Throws<AuthorizationException>(delegate { authBL.Authenticate(email, "111", false).GetAwaiter().GetResult(); });
                 await authBL.Authenticate(email, "qwer1234", false);
 
-                string? authCookie = webCookie.Get(AuthConstants.SessionCookieName);
+                string? authCookie = this.webCookie.Get(AuthConstants.SessionCookieName);
                 Assert.NotNull(authCookie);
 
-                string? rememberMeCookie = webCookie.Get(AuthConstants.RememberMeCookieName);
+                string? rememberMeCookie = this.webCookie.Get(AuthConstants.RememberMeCookieName);
                 Assert.Null(rememberMeCookie);
             }
         }
@@ -38,10 +44,10 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                string email = Guid.NewGuid() + "@test.com";
+                string email = Guid.NewGuid().ToString() + "@test.com";
 
                 int userId = await authBL.CreateUser(
-                    new ResunetDAL.Models.UserModel()
+                    new ResunetDal.Models.UserModel()
                     {
                         Email = email,
                         Password = "qwer1234"
@@ -49,10 +55,10 @@ namespace Resutest
 
                 await authBL.Authenticate(email,"qwer1234",true);
 
-                string? authCookie = webCookie.Get(AuthConstants.SessionCookieName);
+                string? authCookie = this.webCookie.Get(AuthConstants.SessionCookieName);
                 Assert.NotNull(authCookie);
 
-                string? rememberMeCookie = webCookie.Get(AuthConstants.RememberMeCookieName);
+                string? rememberMeCookie = this.webCookie.Get(AuthConstants.RememberMeCookieName);
                 Assert.Null(rememberMeCookie);
             }
         }

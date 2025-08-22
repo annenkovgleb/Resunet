@@ -1,12 +1,12 @@
-﻿using ResunetDAL.Models;
+﻿using ResunetDal.Models;
 
-namespace ResunetBl.Auth;
-
-public interface ICurrentUser
+namespace ResunetBl.Auth
 {
-    Task<bool> IsLoggedIn();
-        
-    Task<int?> GetCurrentUserId();
-        
-    Task<IEnumerable<ProfileModel>> GetProfiles();
+    public interface ICurrentUser
+    {
+        Task<bool> IsLoggedIn();
+        Task<int?> GetCurrentUserId();
+        Task<IEnumerable<ProfileModel>> GetProfiles();
+    }
 }
+
