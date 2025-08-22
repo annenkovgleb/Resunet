@@ -1,5 +1,4 @@
 ﻿using System.Transactions;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Resutest.Helpers;
 
 namespace Resutest
@@ -12,12 +11,12 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                ((TestCookie)this.webCookie).Clear();
+                ((TestCookie)webCookie).Clear();
                 this.dbSession.ResetSessionCache();
                 var session = await this.dbSession.GetSession();
 
                 // получить сессию из бд и убедиться, что она там существует
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
 
@@ -34,13 +33,12 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                // чистка кук
-                ((TestCookie)this.webCookie).Clear();
+                ((TestCookie)webCookie).Clear();
                 this.dbSession.ResetSessionCache();
                 var session = await this.dbSession.GetSession();
                 await this.dbSession.SetUserId(10);
 
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
                 Assert.That(dbSession!.UserId, Is.EqualTo(10));
@@ -50,7 +48,7 @@ namespace Resutest
                 var session2 = await this.dbSession.GetSession();
                 Assert.That(dbSession.DbSessionId, Is.EqualTo(session2.DbSessionId));
 
-                int? userid = await this.currentUser.GetCurrentUserId();
+                int? userid = await currentUser.GetCurrentUserId();
                 Assert.That(userid, Is.EqualTo(10));
             }
         }
@@ -61,14 +59,14 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                ((TestCookie)this.webCookie).Clear();
+                ((TestCookie)webCookie).Clear();
                 this.dbSession.ResetSessionCache();
                 var session = await this.dbSession.GetSession();
                 this.dbSession.AddValue("Test", "TestValue");
                 await this.dbSession.SetUserId(10);
                 await this.dbSession.UpdateSessionData();
 
-                var dbSession = await dbSessionDAL.Get(session.DbSessionId);
+                var dbSession = await DbSession.Get(session.DbSessionId);
 
                 Assert.NotNull(dbSession, "Session should not be null");
                 Assert.That(dbSession!.UserId, Is.EqualTo(10));
@@ -78,7 +76,7 @@ namespace Resutest
                 var session2 = await this.dbSession.GetSession();
                 Assert.That(dbSession.DbSessionId, Is.EqualTo(session2.DbSessionId));
 
-                int? userid = await this.currentUser.GetCurrentUserId();
+                int? userid = await currentUser.GetCurrentUserId();
                 Assert.That(userid, Is.EqualTo(10));
             }
         }
@@ -89,20 +87,18 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                ((TestCookie)this.webCookie).Clear();
-                this.dbSession.ResetSessionCache();
-                var session = await this.dbSession.GetSession();
-                this.dbSession.AddValue("Test", "TestValue");
-                Assert.That(this.dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("TestValue"));
+                ((TestCookie)webCookie).Clear();
+                dbSession.ResetSessionCache();
+                dbSession.AddValue("Test", "TestValue");
+                Assert.That(dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("TestValue"));
 
-                this.dbSession.AddValue("Test", "UpdateValue");
-                Assert.That(this.dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("UpdateValue"));
+                dbSession.AddValue("Test", "UpdateValue");
+                Assert.That(dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("UpdateValue"));
 
-                await this.dbSession.UpdateSessionData();
+                await dbSession.UpdateSessionData();
 
-                this.dbSession.ResetSessionCache();
-                session = await this.dbSession.GetSession();
-                Assert.That(this.dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("UpdateValue"));
+                dbSession.ResetSessionCache();
+                Assert.That(dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo("UpdateValue"));
             }
         }
 
@@ -112,18 +108,16 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                ((TestCookie)this.webCookie).Clear();
-                this.dbSession.ResetSessionCache();
-                var session = await this.dbSession.GetSession();
-                this.dbSession.AddValue("Test", "TestValue");
-                await this.dbSession.UpdateSessionData();
+                ((TestCookie)webCookie).Clear();
+                dbSession.ResetSessionCache();
+                dbSession.AddValue("Test", "TestValue");
+                await dbSession.UpdateSessionData();
 
-                this.dbSession.RemoveValue("Test");
-                await this.dbSession.UpdateSessionData();
+                dbSession.RemoveValue("Test");
+                await dbSession.UpdateSessionData();
 
-                this.dbSession.ResetSessionCache();
-                session = await this.dbSession.GetSession();
-                Assert.That(this.dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo(""));
+                dbSession.ResetSessionCache();
+                Assert.That(dbSession.GetValueDef("Test", "").ToString(), Is.EqualTo(""));
             }
         }
     }

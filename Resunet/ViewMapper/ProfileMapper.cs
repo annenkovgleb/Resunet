@@ -1,35 +1,29 @@
-﻿using ResunetBl.ViewModels;
-using ResunetDal.Models;
+﻿using Resunet.ViewModels;
+using ResunetDAL.Models;
 
-namespace ResunetBl.ViewMapper
+namespace Resunet.ViewMapper;
+
+public static class ProfileMapper
 {
-    public static class ProfileMapper
-    {
-        public static ProfileModel MapProfileViewModelToProfileModel(ProfileViewModel model)
+    public static ProfileModel MapProfileViewModelToProfileModel(ProfileViewModel model)
+        => new ProfileModel()
         {
-            // в этом маппере должны быть только те поля, которые user может ввести в UI
-            return new ProfileModel()
-            {
-                ProfileId = model.ProfileId,
-                ProfileName = model.ProfileName,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                ProfileStatus = model.ProfileStatus
-            };
-        }
+            ProfileId = model.ProfileId,
+            ProfileName = model.ProfileName,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            ProfileStatus = model.ProfileStatus
+        };
 
-        // превращение бэкенд во фронтенд
-        public static ProfileViewModel MapProfileModelToProfileViewModel(ProfileModel model)
+    // превращение бэкенд во фронтенд
+    public static ProfileViewModel MapProfileModelToProfileViewModel(ProfileModel model)
+        => new ProfileViewModel()
         {
-            return new ProfileViewModel()
-            {
-                ProfileId = model.ProfileId,
-                ProfileName = model.ProfileName,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                ProfileImage = model.ProfileImage,
-                ProfileStatus = model.ProfileStatus
-            };
-        }
-    }
+            ProfileId = model.ProfileId,
+            ProfileName = model.ProfileName,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            ProfileImage = model.ProfileImage,
+            ProfileStatus = model.ProfileStatus
+        };
 }

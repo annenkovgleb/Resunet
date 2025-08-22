@@ -1,15 +1,14 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Profile
+namespace ResunetBl.Profile;
+
+public interface IProfile
 {
-    public interface IProfile
-    {
-        Task<IEnumerable<ProfileModel>> Get(int userId);
+    Task<IEnumerable<ProfileModel>> Get(int userId);
 
-        Task AddOrUpdate(ProfileModel model);
+    Task AddOrUpdate(ProfileModel model);
 
-        Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId);
+    Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId);
 
-        Task AddProfileSkill(ProfileSkillModel model);
-    }
+    Task AddProfileSkill(ProfileSkillModel model);
 }

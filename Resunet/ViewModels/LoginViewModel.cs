@@ -1,11 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace ResunetBl.ViewModels
+namespace Resunet.ViewModels
 {
     public class LoginViewModel
     {
-        [Required] // должно быть инициализировано инициализатором объекта
+        [Required] 
         public string? Email { get; set; }
 
         [Required]
