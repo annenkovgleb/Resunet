@@ -8,7 +8,7 @@ using Resunet.ViewModels;
 namespace Resunet.Controllers;
 
 [SiteAuthorize]
-public class ProfilePostsContorller(
+public class ProfilePostsController(
     IPost _post,
     ICurrentUser _currentUser) : Controller
 {

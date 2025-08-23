@@ -29,6 +29,9 @@ builder.Services.AddSingleton<Resunet.Data.IPost, Resunet.Data.Post>();
 
 builder.Services.AddMvc();
 
+builder.Services.AddServerSideBlazor();
+
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -40,6 +43,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.MapBlazorHub();
 
 app.UseRouting();
 

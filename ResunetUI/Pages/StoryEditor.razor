@@ -1,20 +1,20 @@
-﻿@page "/fetchdata"
+﻿@page "/fetchstory"
 @inject HttpClient Http
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Моя статья</PageTitle>
 
-@if (post is null)
+@if (post == null)
 {
     <p><em>Идёт загрузка статьи...</em></p>
 }
 else
 {
-    <div class="col-xs-12 mt-3">
+    <div class="col-xs-12">
         <select @bind="post.Status" class="text">
             @foreach (var item in PostStatusList)
             {
-                <option value="(int)item.PostStatus">@item.Title</option>
+                <option value="@((int)item.PostStatus)">@item.Title</option>
             }
         </select>
     </div>
@@ -24,12 +24,12 @@ else
     </div>
 
     <div class="col-xs-12 mt-3">
-        <textarea type="text" @bind="post.Intro" class="text" placeholder="Описание" />
+        <textarea @bind="post.Intro" class="text" placeholder="Описание"></textarea>
     </div>
 
     <div class="col-md-12 mt-3">
-        <label>Текст статьи</label> 
-        <div class="rich-editor">
+        <label>Текст статьи</label>
+        <div class="rich-eritor">
             @{
                 int index = 0;
             }
@@ -38,9 +38,10 @@ else
             {
                 if (item.ContentItemType == ContentItem.ContentItemTypeEnum.Text)
                 {
-                    <textarea @bind="item.Value" rows="1" class="text" id="contentInput@(index)"
-                              oninput="this.style.height='auto';this.style.height=(this.scrollHeight)px">
-                                                                                                                                                                                                                </textarea>
+                    <textarea @bind="item.Value" rows="1" class="text" id=contentInput@(index)
+                              oninput="this.style.height='auto';this.style.height = (this.scrollHeight)+'px';">
+
+                                        </textarea>
                 }
 
                 index++;
@@ -55,6 +56,7 @@ else
 
     private PostData? post = null;
 
+
     protected override async Task OnInitializedAsync()
     {
         if ((postid ?? 0) == 0)
@@ -66,9 +68,11 @@ else
         }
         else
         {
-            this.post = await Http.GetFromJsonAsync<PostData>("profile/postdata/" + (postid ?? 0).ToString());
+            this.post = await Http.GetFromJsonAsync<PostData>("/profile/postdata/" + (postid ?? 0).ToString());
         }
     }
+
+
 
     public class ContentItem
     {
@@ -88,14 +92,18 @@ else
 
     public class PostData
     {
-        public int PostId { get; set; }
+        public int? PostId { get; set; }
+
         public string Title { get; set; } = "";
+
         public string Intro { get; set; } = "";
-        public List<ContentItem> ContentItems { get; set; }
+
+        public List<ContentItem> ContentItems { get; set; } = new List<ContentItem>();
+
         public int Status { get; set; }
     }
 
-    public enum PostStatusEnum { Private, Public };
+    public enum PostStatusEnum { Private, Public }
 
     public class PostStatusListItem
     {
@@ -106,12 +114,10 @@ else
         }
 
         public PostStatusEnum PostStatus { get; set; }
-
         public string Title { get; set; } = null!;
     }
 
-    List<PostStatusListItem> PostStatusList = new List<PostStatusListItem>()
-    {
+    List<PostStatusListItem> PostStatusList = new List<PostStatusListItem>() {
         new PostStatusListItem(PostStatusEnum.Private, "Черновик"),
         new PostStatusListItem(PostStatusEnum.Public, "Опубликована")
     };
