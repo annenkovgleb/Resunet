@@ -1,27 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ResunetBl.ViewModels;
-using ResunetBl.ViewMapper;
-using ResunetBl.Middleware;
+using Resunet.Middleware;
+using Resunet.ViewMapper;
+using Resunet.ViewModels;
 using ResunetBl.Auth;
 using ResunetBl.Exeption;
 
-// ничего не знает о DAL уровне, его прерогатива работать только с BL уровнем
-
-namespace ResunetBl.Controllers
+namespace Resunet.Controllers
 {
-    [SiteNotAuthorize()]
-    public class RegisterController : Controller
+    [SiteNotAuthorize]
+    public class RegisterController(IAuth _authBl) : Controller
     {
-        private readonly IAuth authBl;
-
-        public RegisterController(IAuth authBl)
-        {
-            this.authBl = authBl;
-        }
-
         [HttpGet]
         [Route("/register")]
-        public IActionResult Index()  // отображение формы для регистрации 
+        public IActionResult Index()
         {
             return View("Index", new RegisterViewModel());
         }
@@ -30,13 +21,11 @@ namespace ResunetBl.Controllers
         [Route("/register")]
         public async Task<IActionResult> IndexSave(RegisterViewModel model)
         {
-
-            // и если модель все еще валидная => создаем пользователя
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await authBl.Register(AuthMapper.MapRegisterViewModelToUserModel(model));
+                    await _authBl.Register(AuthMapper.MapRegisterViewModelToUserModel(model));
                     return Redirect("/");
                 }
                 catch (DublicateEmailExeption)
@@ -52,4 +41,3 @@ namespace ResunetBl.Controllers
         }
     }
 }
-

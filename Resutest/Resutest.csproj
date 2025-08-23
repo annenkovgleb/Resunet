@@ -19,11 +19,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ResunetDal\ResunetDal.csproj" />
+		<ProjectReference Include="..\ResunetDal\ResunetDAL.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\ResunetBl\ResunetBl.csproj">
+		<ProjectReference Include="..\ResunetBl\ResunetBL.csproj">
 			<GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>

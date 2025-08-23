@@ -1,16 +1,16 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Formats.Jpeg;
 
-namespace ResunetBl.Service
+namespace Resunet.Service
 {
     public class WebFile
     {
         const string FOLDER_PREFIX = "./wwwroot";
 
-        public WebFile() { }
+        public WebFile()
+        {
+        }
 
         // изменить имя файла, если превышает кол-во символов 
 
@@ -34,7 +34,7 @@ namespace ResunetBl.Service
 
             // 1 сабстринг - 1ая папка из 2х символов, 2 - следующая папка
             return "/images/" + hash.Substring(0, 2) + "/" +
-                    hash.Substring(0, 4);
+                   hash.Substring(0, 4);
         }
 
         public void CreateFolder(string directory)

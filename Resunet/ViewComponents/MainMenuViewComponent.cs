@@ -1,17 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ResunetBl.Auth;
 
-namespace ResunetBl.ViewComponents
+namespace Resunet.ViewComponents
 {
-    public class MainMenuViewComponent : ViewComponent
+    public class MainMenuViewComponent(ICurrentUser currentUser)
+        : ViewComponent
     {
-        private readonly ICurrentUser currentUser;
-        
-        public MainMenuViewComponent(ICurrentUser currentUser)
-        {
-            this.currentUser = currentUser;
-        }
-
         public async Task<IViewComponentResult> InvokeAsync()
         {
             bool isLoggedIn = await currentUser.IsLoggedIn();

@@ -1,0 +1,19 @@
+﻿@using Resunet.ViewModels
+@model PostViewModel
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<div class="row">
+    @if(Model.PostId == null)
+    {
+        ViewData["Title"] = "Íîâàÿ ñòàòüÿ";
+        <h1>Íîâàÿ ñòàòüÿ</h1>
+    }    
+    else
+    {
+        ViewData["Title"] = "ðåäàêòèðîâàíèå";
+        <h1>ðåäàêòèðîâàíèå</h1>
+    }
+</div>

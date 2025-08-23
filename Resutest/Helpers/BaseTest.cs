@@ -2,32 +2,38 @@
 using ResunetBl.Auth;
 using ResunetBl.Profile;
 using ResunetBl.General;
-using ResunetDal.Interfaces;
-using ResunetDal.Implementations;
+using ResunetDAL.Interfaces;
+using ResunetDAL.Implementations;
+using Auth = ResunetDAL.Implementations.Auth;
+using DbSession = ResunetDAL.Implementations.DbSession;
+using IAuth = ResunetDAL.Interfaces.IAuth;
+using IDbSession = ResunetDAL.Interfaces.IDbSession;
+using IProfile = ResunetDAL.Interfaces.IProfile;
+using Profile = ResunetDAL.Implementations.Profile;
 
 namespace Resutest.Helpers
 {
     public class BaseTest
     {
-        protected IAuthDAL authDAL = new AuthDAL();
+        protected IAuth Auth = new Auth();
         protected IEncrypt encrypt = new Resunet.Deps.Encrypt();
         protected IHttpContextAccessor httpContextAccessor = new HttpContextAccessor();
-        protected IAuth authBL;
-        protected IDbSessionDAL dbSessionDAL = new DbSessionDAL();
-        protected IDbSession dbSession;
+        protected ResunetBl.Auth.IAuth authBL;
+        protected IDbSession DbSession = new DbSession();
+        protected ResunetBl.Auth.IDbSession dbSession;
         protected IWebCookie webCookie;
-        protected IProfileDAL profileDAL = new ProfileDAL();
-        protected IUserTokenDAL userTokenDAL = new UserTokenDAL();
-        protected IProfile profile;
+        protected IProfile Profile = new Profile();
+        protected IUserToken UserToken = new UserToken();
+        protected ResunetBl.Profile.IProfile profile;
         protected CurrentUser currentUser;
 
         public BaseTest()
         {
             webCookie = new TestCookie();
-            dbSession = new DbSession(dbSessionDAL, webCookie);
-            authBL = new Auth(authDAL, encrypt, webCookie, dbSession, userTokenDAL);
-            currentUser = new CurrentUser(dbSession, webCookie, userTokenDAL, profileDAL);
-            profile = new Profile(profileDAL);
+            dbSession = new ResunetBl.Auth.DbSession(DbSession, webCookie);
+            authBL = new ResunetBl.Auth.Auth(Auth, encrypt, webCookie, dbSession, UserToken);
+            currentUser = new CurrentUser(dbSession, webCookie, UserToken, Profile);
+            // profile = new Profile(profileDAL);
         }
     }
 }

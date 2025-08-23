@@ -1,8 +1,7 @@
-﻿using System;
-using ResunetBl.ViewModels;
-using ResunetDal.Models;
+﻿using Resunet.ViewModels;
+using ResunetDAL.Models;
 
-namespace ResunetBl.ViewMapper
+namespace Resunet.ViewMapper
 {
     public static class AuthMapper
 	{

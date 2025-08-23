@@ -1,4 +1,4 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
 namespace ResunetBl.Auth
 {
