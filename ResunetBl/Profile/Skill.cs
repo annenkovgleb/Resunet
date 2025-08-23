@@ -1,20 +1,13 @@
-﻿using ResunetDal.Interfaces;
-using ResunetDal.Models;
+﻿using ResunetDAL.Interfaces;
+using ResunetDAL.Models;
 
 namespace ResunetBl.Profile
 {
-    public class Skill : ISkill
+    public class Skill(ResunetDAL.Interfaces.ISkill skill) : ISkill
     {
-        private readonly ISkillDAL skillDAL;
-
-        public Skill(ISkillDAL skillDAL)
+        public async Task<IEnumerable<SkillModel>> Search(int top, string skillName)
         {
-            this.skillDAL = skillDAL;
-        }
-
-        public async Task<IEnumerable<SkillModel>> Search(int top, string skillname)
-        {
-            return await skillDAL.Search(top, skillname);
+            return await skill.Search(top, skillName);
         }
     }
 }

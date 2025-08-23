@@ -1,4 +1,4 @@
-﻿@model ProfileViewModel
+﻿@model Resunet.ViewModels.ProfileViewModel
 
 @{
     ViewData["Title"] = "Профиль";
@@ -13,15 +13,15 @@
 
             <div class="form-group">
                 <select name="ProfileStatus" class="text">
-                    @foreach (int psv in Enum.GetValues(typeof(ResunetDal.Models.ProfileStatusEnum)))
+                    @foreach (int psv in Enum.GetValues(typeof(ResunetDAL.Models.ProfileStatusEnum)))
                     {
                         if((int)Model.ProfileStatus == psv)
                         {
-                            <option value="@psv" selected="selected"> @Resunet.Service.Localization.Languages["ru"].GetLabel("ProfileStatusEnum" + @Enum.GetName(typeof(ResunetDal.Models.ProfileStatusEnum), psv))</option>
+                            <option value="@psv" selected="selected"> @Resunet.Service.Localization.Languages["ru"].GetLabel("ProfileStatusEnum" + @Enum.GetName(typeof(ResunetDAL.Models.ProfileStatusEnum), psv))</option>
                         }
                         else
                         {
-                            <option value="@psv"> @Resunet.Service.Localization.Languages["ru"].GetLabel("ProfileStatusEnum" + @Enum.GetName(typeof(ResunetDal.Models.ProfileStatusEnum), psv))</option>
+                            <option value="@psv"> @Resunet.Service.Localization.Languages["ru"].GetLabel("ProfileStatusEnum" + @Enum.GetName(typeof(ResunetDAL.Models.ProfileStatusEnum), psv))</option>
                         }
                     }
                 </select>

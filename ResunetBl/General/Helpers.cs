@@ -9,6 +9,7 @@ namespace ResunetBl.General
             int value;
             if (int.TryParse(str, out value))
                 return value;
+
             return def;
         }
 
@@ -30,7 +31,7 @@ namespace ResunetBl.General
                 TransactionScopeOption.Required,
                 new TimeSpan(0, 0, seconds),
                 TransactionScopeAsyncFlowOption.Enabled
-                );
+            );
         }
     }
 }

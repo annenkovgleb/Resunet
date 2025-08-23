@@ -3,21 +3,16 @@
 namespace Resunet.Deps
 {
     // обертка, чтобы не реализовывать все с HttpContext
-    public class WebCookie : IWebCookie
+    public class WebCookie(IHttpContextAccessor httpContextAccessor)
+        : IWebCookie
     {
-        private IHttpContextAccessor httpContextAccessor;
-
-        public WebCookie(IHttpContextAccessor httpContextAccessor)
-        {
-            this.httpContextAccessor = httpContextAccessor;
-        }
-
         public void Add(string cookieName, string value, int days = 0)
         {
             CookieOptions options = new CookieOptions();
             options.Path = "/";
             if (days > 0)
                 options.Expires = DateTimeOffset.UtcNow.AddDays(days);
+
             httpContextAccessor?.HttpContext?.Response.Cookies.Append(cookieName, value, options);
         }
 
@@ -27,8 +22,10 @@ namespace Resunet.Deps
             options.Path = "/";
             options.HttpOnly = true;
             options.Secure = true;
+
             if (days > 0)
                 options.Expires = DateTimeOffset.UtcNow.AddDays(days);
+
             httpContextAccessor?.HttpContext?.Response.Cookies.Append(cookieName, value, options);
         }
 
@@ -39,9 +36,14 @@ namespace Resunet.Deps
 
         public string? Get(string cookieName)
         {
-            var cookie = httpContextAccessor?.HttpContext?.Request?.Cookies.FirstOrDefault(m => m.Key == cookieName);
+            var cookie =
+                httpContextAccessor?.HttpContext?.Request?.Cookies.FirstOrDefault(m => m.Key == cookieName);
+
             if (cookie != null && cookie.Value.Value != null)
+            {
                 return cookie.Value.Value;
+            }
+
             return null;
         }
     }

@@ -1,7 +1,6 @@
-﻿namespace ResunetDal.Models
+﻿namespace ResunetDAL.Models;
+
+public class ResumeModel
 {
-    public class ResumeModel
-    {
-        public ProfileModel Profile { get; set; } = null!;
-    }
+    public ProfileModel Profile { get; set; } = null!;
 }

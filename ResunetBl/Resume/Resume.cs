@@ -1,21 +1,14 @@
-﻿using ResunetDal.Interfaces;
-using ResunetDal.Models;
+﻿using ResunetDAL.Interfaces;
+using ResunetDAL.Models;
 
 namespace ResunetBl.Resume
 {
-    public class Resume : IResume
+    public class Resume(IProfile profile) : IResume
     {
-        private readonly IProfileDAL profileDAL;
-
-        public Resume(IProfileDAL profileDAL)
-        {
-            this.profileDAL = profileDAL;
-        }
-
         public async Task<ResumeModel> Get(int profileId)
         {
-            ProfileModel profileModel = await profileDAL.GetByProfileId(profileId);
-            return new ResumeModel()
+            ProfileModel profileModel = await profile.GetByProfileId(profileId);
+            return new ResumeModel
             {
                 Profile = profileModel
             };
@@ -23,7 +16,7 @@ namespace ResunetBl.Resume
 
         public async Task<IEnumerable<ProfileModel>> Search(int top)
         {
-            return await profileDAL.Search(top);
+            return await profile.Search(top);
         }
     }
 }
