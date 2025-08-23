@@ -1,9 +1,8 @@
 ﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Profile
+namespace ResunetBl.Profile;
+
+public interface ISkill
 {
-    public interface ISkill
-    {
-        Task<IEnumerable<SkillModel>> Search(int top, string skillName);
-    }
+    Task<IEnumerable<SkillModel>> Search(int top, string skillName);
 }

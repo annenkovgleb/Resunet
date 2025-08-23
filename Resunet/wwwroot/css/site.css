@@ -58,3 +58,9 @@ body {
 .profileimage {
     width: 100%;
 }
+
+.text {
+    padding: 8px,12px;
+    border: 1px solid #ccc;
+    width: 100%;
+}

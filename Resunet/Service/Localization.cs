@@ -11,7 +11,7 @@ public class Localization
             { "en", new Localization("en") },
         };
 
-    private Dictionary<string, string> labels = new Dictionary<string, string>();
+    private Dictionary<string, string> labels = new();
 
     public Localization(string language)
     {

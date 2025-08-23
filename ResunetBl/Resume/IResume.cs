@@ -1,11 +1,10 @@
 ﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Resume
-{
-    public interface IResume
-    {
-        Task<IEnumerable<ProfileModel>> Search(int top);
+namespace ResunetBl.Resume;
 
-        Task<ResumeModel> Get(int profileId);
-    }
+public interface IResume
+{
+    Task<IEnumerable<ProfileModel>> Search(int top);
+
+    Task<ResumeModel> Get(int profileId);
 }

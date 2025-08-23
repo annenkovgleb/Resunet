@@ -1,44 +1,39 @@
 ﻿using Resunet.ViewModels;
 using ResunetDAL.Models;
 
-namespace Resunet.ViewMapper
+namespace Resunet.ViewMapper;
+
+public static class PostMapper
 {
-    public static class PostMapper
+    public static PostModel MapPostViewModelToPostModel(PostViewModel viewModel)
+        => new PostModel()
+        {
+            PostId = viewModel.PostId,
+            Title = viewModel.Title ?? "",
+            Intro = viewModel.Intro ?? "",
+            Status = viewModel.Status
+        };
+
+    public static PostViewModel MapPostModelToPostViewModel(PostModel model)
+        => new PostViewModel()
+        {
+            PostId = model.PostId,
+            Title = model.Title,
+            Intro = model.Intro,
+            Status = model.Status
+        };
+
+    public static IEnumerable<PostContentModel> MapPostItemViewModelToPostItemModel(
+        IEnumerable<PostContentItemViewModel> items)
     {
-        public static PostModel MapPostViewModelToPostModel(PostViewModel viewModel)
+        foreach (PostContentItemViewModel model in items)
         {
-            return new PostModel()
+            yield return new PostContentModel()
             {
-                PostId = viewModel.PostId,
-                Title = viewModel.Title ?? "",
-                Intro = viewModel.Intro ?? "",
-                Status = viewModel.Status
+                PostContentId = model.PostContentId,
+                ContentItemType = (int)model.ContentItemType,
+                Value = model.Value ?? "",
             };
-        }
-
-        public static PostViewModel MapPostModelToPostViewModel(PostModel model)
-        {
-            return new PostViewModel()
-            {
-                PostId = model.PostId,
-                Title = model.Title,
-                Intro = model.Intro,
-                Status = model.Status
-            };
-        }
-
-        public static IEnumerable<PostContentModel> MapPostitemViewModelToPostItemModel(
-            IEnumerable<PostContentItemViewModel> items)
-        {
-            foreach (PostContentItemViewModel model in items)
-            {
-                yield return new PostContentModel()
-                {
-                    PostContentId = model.PostContentId,
-                    ContentItemType = (int)model.ContentItemType,
-                    Value = model.Value ?? "",
-                };
-            }
         }
     }
 }

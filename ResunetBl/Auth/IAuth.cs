@@ -1,16 +1,14 @@
 ﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Auth
+namespace ResunetBl.Auth;
+
+public interface IAuth
 {
-    public interface IAuth
-    {
-        Task<int> CreateUser(UserModel user);
+    Task<int> CreateUser(UserModel user);
 
-        Task<int> Authenticate(string email, string password, bool rememberMe);
+    Task<int> Authenticate(string email, string password, bool rememberMe);
 
-        Task ValidateEmail(string email);
+    Task ValidateEmail(string email);
 
-        Task Register(UserModel user);
-    }
+    Task Register(UserModel user);
 }
-
