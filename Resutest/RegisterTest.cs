@@ -17,13 +17,11 @@ namespace Resutest
         {
             using (TransactionScope scope = Helper.CreateTransactionScope())
             {
-                // Guid - для генерации новых пользователей
                 string email = Guid.NewGuid().ToString() + "@test.com";
 
                 // validate : should not be in the DB
                 authBL.ValidateEmail(email).GetAwaiter().GetResult();
 
-                // create user
                 int userId = await authBL.CreateUser(
                     new ResunetDAL.Models.UserModel()
                     {

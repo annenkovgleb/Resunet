@@ -1,6 +1,5 @@
-﻿namespace ResunetBl.Exeption
+﻿namespace ResunetBl.Exeption;
+
+public class AuthorizationException : Exception
 {
-    public class AuthorizationException : Exception
-    {
-    }
 }

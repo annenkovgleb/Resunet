@@ -1,15 +1,14 @@
 ﻿using ResunetDAL.Models;
 
-namespace Resunet.Data
+namespace Resunet.Data;
+
+public interface IPost
 {
-    public interface IPost
-    {
-        Task<PostModel> GetPost(int postId);
+    Task<PostModel> GetPost(int postId);
 
-        Task<int> AddOrUpdate(PostModel model);
+    Task<int> AddOrUpdate(PostModel model);
 
-        Task<List<PostContentModel>> GetPostItems(int postId);
+    Task<List<PostContentModel>> GetPostItems(int postId);
 
-        Task AddOrUpdateContentItems(IEnumerable<PostContentModel> items);
-    }
+    Task AddOrUpdateContentItems(IEnumerable<PostContentModel> items);
 }

@@ -35,7 +35,6 @@ namespace Resutest
         {
             string email = Guid.NewGuid().ToString() + "@test.com";
 
-            // create user
             int userId = await authBL.CreateUser(
                 new ResunetDAL.Models.UserModel()
                 {

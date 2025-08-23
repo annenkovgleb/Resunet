@@ -7,11 +7,6 @@ namespace Resutest
 {
     public class AuthTest : BaseTest
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         [Test]
         public async Task AuthRegistrationTest()
         {
@@ -19,7 +14,6 @@ namespace Resutest
             {
                 string email = Guid.NewGuid() + "@test.com";
 
-                // create user
                 int userId = await authBL.CreateUser(
                     new ResunetDAL.Models.UserModel()
                     {

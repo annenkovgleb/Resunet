@@ -4,44 +4,34 @@ using Resunet.ViewModels;
 using ResunetBl.Auth;
 using ResunetBl.Exeption;
 
-namespace Resunet.Controllers
+namespace Resunet.Controllers;
+
+[SiteNotAuthorize]
+public class LoginController(IAuth _authBl) : Controller
 {
-    [SiteNotAuthorize()]
-    public class LoginController : Controller
+    [HttpGet]
+    [Route("/login")]
+    public IActionResult Index()
+        => View("Index", new LoginViewModel());
+
+    [HttpPost]
+    [Route("/login")]
+    [AutoValidateAntiforgeryToken]
+    public async Task<IActionResult> IndexSave(LoginViewModel model)
     {
-        private readonly IAuth authBl;
-
-        public LoginController(IAuth authBl)
+        if (ModelState.IsValid)
         {
-            this.authBl = authBl;
-        }
-
-        [HttpGet]
-        [Route("/login")]
-        public IActionResult Index()
-        {
-            return View("Index", new LoginViewModel());
-        }
-
-        [HttpPost]
-        [Route("/login")]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> IndexSave(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    await authBl.Authenticate(model.Email!, model.Password!, model.RememberMe == true);
-                    return Redirect("/");
-                }
-                catch (AuthorizationException)
-                {
-                    ModelState.AddModelError("Email", "Имя или Email неверные");
-                }
+                await _authBl.Authenticate(model.Email!, model.Password!, model.RememberMe == true);
+                return Redirect("/");
             }
-            return View("Index", model);
+            catch (AuthorizationException)
+            {
+                ModelState.AddModelError("Email", "Имя или Email неверные");
+            }
         }
+
+        return View("Index", model);
     }
 }
-

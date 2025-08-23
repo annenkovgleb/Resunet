@@ -2,60 +2,56 @@
 using ResunetDAL.Interfaces;
 using ResunetDAL.Models;
 
-namespace ResunetBl.Auth
+namespace ResunetBl.Auth;
+
+public class CurrentUser(
+    IDbSession _dbSession,
+    IWebCookie _webCookie,
+    IUserToken userToken,
+    IProfile profile) : ICurrentUser
 {
-    public class CurrentUser(
-        IDbSession _dbSession,
-        IWebCookie _webCookie,
-        IUserToken userToken,
-        IProfile profile)
-        : ICurrentUser
+    public async Task<int?> GetUserIdByToken()
     {
-        public async Task<int?> GetUserIdByToken()
+        string? tokenCookie = _webCookie.Get(AuthConstants.RememberMeCookieName);
+        if (tokenCookie is null)
+            return null;
+
+        Guid? tokenGuid = Helpers.StringToGuidDef(tokenCookie ?? "");
+
+        if (tokenGuid is null)
+            return null;
+
+        int? userid = await userToken.Get((Guid)tokenGuid);
+        return userid;
+    }
+
+    public async Task<bool> IsLoggedIn()
+    {
+        bool isLoggedIn = await _dbSession.IsLoggedIn();
+        if (!isLoggedIn)
         {
-            string? tokenCookie = _webCookie.Get(AuthConstants.RememberMeCookieName);
-            if (tokenCookie is null)
-                return null;
-
-            Guid? tokenGuid = Helpers.StringToGuidDef(tokenCookie ?? "");
-
-            if (tokenGuid is null)
-                return null;
-
-            int? userid = await userToken.Get((Guid)tokenGuid);
-            return userid;
-        }
-
-        public async Task<bool> IsLoggedIn()
-        {
-            bool isLoggedIn = await _dbSession.IsLoggedIn();
-            if (!isLoggedIn)
+            int? userid = await GetUserIdByToken();
+            if (userid is not null)
             {
-                int? userid = await GetUserIdByToken();
-                if (userid is not null)
-                {
-                    await _dbSession.SetUserId((int)userid);
-                    isLoggedIn = true;
-                }
+                await _dbSession.SetUserId((int)userid);
+                isLoggedIn = true;
             }
-
-            return isLoggedIn;
         }
 
-        public async Task<int?> GetCurrentUserId()
+        return isLoggedIn;
+    }
+
+    public async Task<int?> GetCurrentUserId()
+        => await _dbSession.GetUserId();
+    
+    public async Task<IEnumerable<ProfileModel>> GetProfiles()
+    {
+        int? userid = await GetCurrentUserId();
+        if (userid is null)
         {
-            return await _dbSession.GetUserId();
+            throw new Exception("Пользователь не найден");
         }
 
-        public async Task<IEnumerable<ProfileModel>> GetProfiles()
-        {
-            int? userid = await GetCurrentUserId();
-            if (userid is null)
-            {
-                throw new Exception("Пользователь не найден");
-            }
-
-            return await profile.GetByUserId((int)userid);
-        }
+        return await profile.GetByUserId((int)userid);
     }
 }
