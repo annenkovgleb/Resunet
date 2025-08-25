@@ -7,8 +7,8 @@ namespace ResunetBl.Auth;
 public class CurrentUser(
     IDbSession _dbSession,
     IWebCookie _webCookie,
-    IUserToken userToken,
-    IProfile profile) : ICurrentUser
+    IUserTokenDAL userToken,
+    IProfileDAL profile) : ICurrentUser
 {
     public async Task<int?> GetUserIdByToken()
     {

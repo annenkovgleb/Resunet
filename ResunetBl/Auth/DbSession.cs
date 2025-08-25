@@ -5,7 +5,7 @@ using ResunetDAL.Models;
 namespace ResunetBl.Auth;
 
 public class DbSession(
-    ResunetDAL.Interfaces.IDbSession session,
+    ResunetDAL.Interfaces.IDbSessionDAL session,
     IWebCookie _webCookie) : IDbSession
 {
     private SessionModel? sessionModel;

@@ -38,15 +38,40 @@ else
             {
                 if (item.ContentItemType == ContentItem.ContentItemTypeEnum.Text)
                 {
-                    <textarea @bind="item.Value" rows="1" class="text" id=contentInput@(index)
-                              oninput="this.style.height='auto';this.style.height = (this.scrollHeight)+'px';">
+                    <textarea @bind="item.Value" rows="1" class="text" id="contentInput@(index)"
+                              oninput="this.style.height='auto';this.style.height = (this.scrollHeight)+'px';"></textarea>
+                }
 
-                                        </textarea>
+                if (item.ContentItemType == ContentItem.ContentItemTypeEnum.Image)
+                {
+                    <div class="editpost-image">
+                        @if (!String.IsNullOrEmpty(item.Value))
+                        {
+                            <img src="/data/empty-image.jpg" class="post-image" />
+                        }
+                        else
+                        {
+                            <img src="@item.Value" class="post-image" />
+                        }
+                        @if (isLoading == false)
+                        {
+                            <InputFile OnChange="async (InputFileChangeEventArgs e) => { await UploadFile(e, item); }"
+                                       accept="image/x-png,image/jpeg" />
+                        }
+                    </div>
                 }
 
                 index++;
             }
         </div>
+    </div>
+
+    <div class="col-6">
+        <button class="button" onclick="Save">Сохранить</button>
+    </div>
+
+    <div class="col-6 text-end">
+        <button class="button" onclick="AddPicture">Добавить картинку</button>
     </div>
 }
 
@@ -54,8 +79,9 @@ else
     [Parameter]
     public int? postid { get; set; }
 
-    private PostData? post = null;
+    private bool isLoading = false;
 
+    private PostData? post = null;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,7 +98,56 @@ else
         }
     }
 
+    public async Task Save()
+    {
+        if (post is null)
+            return;
 
+        var result = await Http.PutAsJsonAsync("/profile/post", this.post);
+ 
+        
+    }
+
+    public async Task UploadFile(InputFileChangeEventArgs value, ContentItem item)
+    {
+        if (value.File is null)
+            return;
+
+        using (var ms = value.File.OpenReadStream(6 * 1024 * 1024))
+        {
+            var content = new MultipartFormDataContent();
+            content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data"); // чтобы запрос не накрылся
+            content.Add(new StreamContent(ms, (int)ms.Length), "image", value.File.Name);
+            item.Value = await this.UploadImage(content); // загружает на сервер изображение, возвращает имя загруженного файла
+        };
+    }
+
+    public async Task<string> UploadImage(MultipartFormDataContent content)
+    {
+        this.isLoading = true;
+
+        var result = await Http.PostAsync("/profile/posts/image", content);
+
+        this.isLoading = false;
+
+        if (result.IsSuccessStatusCode)
+        {
+            var postContent = await result.Content.ReadFromJsonAsync<PostImageResult>();
+            return postContent.FileName ?? "";
+        }
+        return "";
+    }
+
+    private void AddPicture()
+    {
+        this.post?.ContentItems.Add(new ContentItem(ContentItem.ContentItemTypeEnum.Image));
+        this.post?.ContentItems.Add(new ContentItem(ContentItem.ContentItemTypeEnum.Text));
+    }
+
+    private class PostImageResult
+    {
+        public string FileName { get; set; } = "";
+    }
 
     public class ContentItem
     {
