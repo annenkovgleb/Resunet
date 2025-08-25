@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resutest", "Resutest\Resute
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetUI", "ResunetUI\ResunetUI.csproj", "{968FF482-F837-4D0F-B42A-F13E8C4EE2EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetDal", "ResunetDal\ResunetDal.csproj", "{C9D5279A-B58C-4897-9EA3-BF49CA6619C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetDAL", "ResunetDal\ResunetDAL.csproj", "{C9D5279A-B58C-4897-9EA3-BF49CA6619C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetBl", "ResunetBl\ResunetBl.csproj", "{4E1E7989-8442-4A31-96EF-8E142FC062A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResunetBL", "ResunetBl\ResunetBL.csproj", "{4E1E7989-8442-4A31-96EF-8E142FC062A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

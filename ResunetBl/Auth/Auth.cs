@@ -1,88 +1,72 @@
 ﻿using ResunetBl.General;
-using ResunetDal.Models;
-using ResunetDal.Interfaces;
+using ResunetDAL.Models;
+using ResunetDAL.Interfaces;
 using ResunetBl.Exeption;
 
-namespace ResunetBl.Auth
+namespace ResunetBl.Auth;
+
+public class Auth(
+    ResunetDAL.Interfaces.IAuth auth,
+    IEncrypt _encrypt,
+    IWebCookie _webCookie,
+    IDbSession _dbSession,
+    IUserToken userToken) : IAuth
 {
-    public class Auth : IAuth
+    // IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
+    // Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
+
+    public async Task Login(int id)
+        => await _dbSession.SetUserId(id);
+
+    public async Task<int> CreateUser(UserModel user)
     {
-        private readonly IAuthDAL authDAL;
-        private readonly IEncrypt encrypt;
-        private readonly IDbSession dbSession;
-        private readonly IUserTokenDAL userTokenDAL;
-        private readonly IWebCookie webCookie;
+        user.Salt = Guid.NewGuid().ToString();
+        user.Password = _encrypt.HashPassword(user.Password, user.Salt);
 
-        // IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
-        // Сохранили объект, который должен умереть после каждого 
-        // запроса в объекте, который должен жить вечно - низя так.
-        // Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
-        public Auth(IAuthDAL authDAL,
-            IEncrypt encrypt,
-            IWebCookie webCookie,
-            IDbSession dbSession,
-            IUserTokenDAL userTokenDAL
-            )
+        int id = await auth.CreateUser(user);
+        await Login(id);
+        return id;
+    }
+
+    public async Task<int> Authenticate(string email, string password, bool rememberMe)
+    {
+        var user = await auth.GetUser(email);
+
+        if (user.UserId is not null && user.Password == _encrypt.HashPassword(password, user.Salt))
         {
-            this.authDAL = authDAL;
-            this.encrypt = encrypt;
-            this.webCookie = webCookie;
-            this.dbSession = dbSession;
-            this.userTokenDAL = userTokenDAL;
-        }
+            await Login(user.UserId ?? 0);
 
-        public async Task Login(int id)
-        {
-            await dbSession.SetUserId(id);
-        }
-
-        public async Task<int> CreateUser(UserModel user)
-        {
-            user.Salt = Guid.NewGuid().ToString();
-            user.Password = encrypt.HashPassword(user.Password, user.Salt);
-
-            int id = await authDAL.CreateUser(user);
-            await Login(id);
-            return id;
-        }
-
-        public async Task<int> Authenticate(string email, string password, bool rememberMe)
-        {
-            var user = await authDAL.GetUser(email);
-
-            if (user.UserId != null && user.Password == encrypt.HashPassword(password, user.Salt))
+            if (rememberMe)
             {
-                await Login(user.UserId ?? 0);
-
-                if (rememberMe)
-                {
-                    // создаем токен и отправляем его в куку
-                    Guid tokenId = await userTokenDAL.Create(user.UserId ?? 0);
-                    webCookie.AddSecure(AuthConstants.RememberMeCookieName, tokenId.ToString(), AuthConstants.RememberMeDays);
-                }
-
-                return user.UserId ?? 0;
+                Guid tokenId = await userToken.Create(user.UserId ?? 0);
+                _webCookie.AddSecure(
+                    AuthConstants.RememberMeCookieName,
+                    tokenId.ToString(),
+                    AuthConstants.RememberMeDays);
             }
-            throw new AuthorizationException();
+
+            return user.UserId ?? 0;
         }
 
-        public async Task ValidateEmail(string email)
-        {
-            var user = await authDAL.GetUser(email);
-            if (user.UserId != null)
-                throw new DublicateEmailExeption();
-        }
+        throw new AuthorizationException();
+    }
 
-        public async Task Register(UserModel user)
+    public async Task ValidateEmail(string email)
+    {
+        var user = await auth.GetUser(email);
+        if (user.UserId is not null)
+            throw new DublicateEmailExeption();
+    }
+
+    public async Task Register(UserModel user)
+    {
+        // защита от спама, при этом пользователь может зайти с разных устройств
+        using (var scope = Helpers.CreateTransactionScope())
         {
-            // защита от спама, при этом пользователь может зайти с разных устройств
-            using (var scope = Helpers.CreateTransactionScope())
-            {
-                await dbSession.Lock();
-                await ValidateEmail(user.Email);
-                await CreateUser(user);
-                scope.Complete();
-            }
+            await _dbSession.Lock();
+            await ValidateEmail(user.Email);
+            await CreateUser(user);
+            scope.Complete();
         }
     }
 }

@@ -15,24 +15,25 @@ else
             {
                 if (skill.Level >= 0 && skill.Level < skillNames.Length)
                 {
-                <tr>
-                    <td>@skill.Name</td>
-                    <td>
-                        @skillNames[skill.Level]
-                    </td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <td>@skill.Name</td>
+                        <td>
+                            @skillNames[skill.Level]
+                        </td>
+                        <td></td>
+                    </tr>
                 }
             }
             <tr>
                 <td class="autocomplete">
                     <input type="text" @bind="editItem.Name" @oninput="Filter" @onblur="CancelFilter" />
-                    @if (skilldict != null) {
+                    @if (skilldict != null)
+                    {
                         <ul class="options">
-                        @foreach (var skill in skilldict)
-                        {
-                            <li @onclick="() => SeelctItem(skill)" value="@skill">@skill</li>
-                        }
+                            @foreach (var skill in skilldict)
+                            {
+                                <li @onclick="() => SeelctItem(skill)" value="@skill">@skill</li>
+                            }
                         </ul>
                     }
                 </td>

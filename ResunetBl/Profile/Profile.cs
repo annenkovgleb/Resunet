@@ -1,50 +1,39 @@
-﻿using ResunetDal.Interfaces;
-using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Profile
+namespace ResunetBl.Profile;
+
+public class Profile(ResunetDAL.Interfaces.IProfile profile, ResunetDAL.Interfaces.ISkill _skill) : IProfile
 {
-    public class Profile : IProfile
+    public async Task AddOrUpdate(ProfileModel model)
     {
-        private readonly IProfileDAL profileDAL;
-        private readonly ISkillDAL skillDAL;
-
-        public Profile(IProfileDAL profileDAL, ISkillDAL skillDAL)
+        if (model.ProfileId is null)
         {
-            this.profileDAL = profileDAL;
-            this.skillDAL = skillDAL;
+            model.ProfileId = await profile.Add(model);
+        }
+        else
+        {
+            await profile.Update(model);
+        }
+    }
+
+    public async Task<IEnumerable<ProfileModel>> Get(int userId)
+        => await profile.GetByUserId(userId);
+
+    public async Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId)
+        => await _skill.GetProfileSkills(profileId);
+
+    public async Task AddProfileSkill(ProfileSkillModel model)
+    {
+        var skill = await _skill.Get(model.SkillName);
+        if (skill is not null || skill.SkillId is null)
+        {
+            model.SkillId = await _skill.Create(model.SkillName);
+        }
+        else
+        {
+            model.SkillId = skill.SkillId ?? 0;
         }
 
-        public Profile(IProfileDAL profileDAL)
-        {
-            this.profileDAL = profileDAL;
-        }
-
-        public async Task AddOrUpdate(ProfileModel model)
-        {
-            if (model.ProfileId == null)
-                model.ProfileId = await profileDAL.Add(model);
-            else
-                await profileDAL.Update(model);
-        }
-
-        public async Task<IEnumerable<ProfileModel>> Get(int userId)
-        {
-            return await profileDAL.GetByUserId(userId);
-        }
-
-        public async Task<IEnumerable<ProfileSkillModel>> GetProfileSkills(int profileId)
-        {
-            return await skillDAL.GetProfileSkills(profileId);
-        }
-
-        public async Task AddProfileSkill(ProfileSkillModel model)
-        {
-            var skill = await skillDAL.Get(model.SkillName);
-            if (skill == null || skill.SkillId == null)
-                model.SkillId = await skillDAL.Create(model.SkillName);
-            else
-                model.SkillId = skill.SkillId ?? 0;
-            await skillDAL.AddProfileSkill(model);
-        }
+        await _skill.AddProfileSkill(model);
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace ResunetDal.Models
-{
-    public class SkillModel
-    {
-        public int? SkillId { get; set; }
+﻿namespace ResunetDAL.Models;
 
-        public string? SkillName { get; set; }
-    }
+public class SkillModel
+{
+    public int? SkillId { get; set; }
+
+    public string? SkillName { get; set; }
 }

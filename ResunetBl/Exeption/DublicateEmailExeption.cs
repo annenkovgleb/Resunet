@@ -1,6 +1,5 @@
-﻿namespace ResunetBl.Exeption
+﻿namespace ResunetBl.Exeption;
+
+public class DublicateEmailExeption : Exception
 {
-    public class DublicateEmailExeption : Exception
-    {
-    }
 }

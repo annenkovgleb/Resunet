@@ -1,27 +1,26 @@
-﻿using ResunetDal.Models;
+﻿using ResunetDAL.Models;
 
-namespace ResunetBl.Auth
+namespace ResunetBl.Auth;
+
+public interface IDbSession
 {
-    public interface IDbSession
-    {
-        Task<SessionModel> GetSession();
+    Task<SessionModel> GetSession();
 
-        Task SetUserId(int userId);
+    Task SetUserId(int userId);
 
-        Task<int?> GetUserId();
+    Task<int?> GetUserId();
 
-        Task<bool> IsLoggedIn();
+    Task<bool> IsLoggedIn();
 
-        Task Lock();
+    Task Lock();
 
-        void ResetSessionCache();
+    void ResetSessionCache();
 
-        Task UpdateSessionData();
+    Task UpdateSessionData();
 
-        void AddValue(string key, object value);
+    void AddValue(string key, object value);
 
-        void RemoveValue(string key);
+    void RemoveValue(string key);
 
-        object GetValueDef(string key, object defaultValue);
-    }
+    object GetValueDef(string key, object defaultValue);
 }
