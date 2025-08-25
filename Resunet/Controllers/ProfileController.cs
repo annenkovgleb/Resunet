@@ -6,19 +6,20 @@ using Resunet.ViewModels;
 using ResunetBl.Auth;
 using ResunetBl.Profile;
 using ResunetDAL.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Resunet.Controllers;
 
 [SiteAuthorize]
 public class ProfileController(
     IProfile _profile,
-    ICurrentUser currentUser) : Controller
+    ICurrentUser _currentUser) : Controller
 {
     [HttpGet]
     [Route("/profile")]
     public async Task<IActionResult> Index()
     {
-        var profiles = await currentUser.GetProfiles();
+        var profiles = await _currentUser.GetProfiles();
 
         ProfileModel? profileModel = profiles.FirstOrDefault();
 
@@ -32,7 +33,7 @@ public class ProfileController(
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> ImageSave(int? profileId)
     {
-        int? userid = await currentUser.GetCurrentUserId();
+        int? userid = await _currentUser.GetCurrentUserId();
         if (userid is null)
             throw new Exception("Пользователь не найден");
 
@@ -42,8 +43,7 @@ public class ProfileController(
 
         if (ModelState.IsValid)
         {
-            ProfileModel profileModel =
-                profiles.FirstOrDefault(m => m.ProfileId == profileId) ?? new ProfileModel();
+            ProfileModel profileModel = profiles.FirstOrDefault(m => m.ProfileId == profileId) ?? new ProfileModel();
             profileModel.UserId = (int)userid;
 
             // Request.Form.Files[0] != null при обращении к нулевому массиву, если файл никто не выберет, то здесь все рухнет
@@ -51,14 +51,12 @@ public class ProfileController(
             if (Request.Form.Files.Count > 0 && Request.Form.Files[0] is not null)
             {
                 WebFile webfile = new WebFile();
-                string filename = webfile.GetWebFilename(Request.Form.Files[0].FileName);
+                string filename = webfile.GetWebFileName(userid + "-" + Request.Form.Files[0].FileName);
                 await webfile.UploadAndResizeImage(Request.Form.Files[0].OpenReadStream(), filename, 800, 600);
                 profileModel.ProfileImage = filename;
+                await _profile.AddOrUpdate(profileModel);
             }
-
-            await _profile.AddOrUpdate(profileModel);
         }
-
         return Redirect("/profile");
     }
 
@@ -67,7 +65,7 @@ public class ProfileController(
     [AutoValidateAntiforgeryToken]
     public async Task<IActionResult> IndexSave(ProfileViewModel model)
     {
-        var userid = await currentUser.GetCurrentUserId();
+        var userid = await _currentUser.GetCurrentUserId();
         if (userid is null)
         {
             throw new Exception("Пользователь не найден");

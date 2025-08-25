@@ -2,7 +2,7 @@
 
 namespace ResunetBl.Profile;
 
-public class Profile(ResunetDAL.Interfaces.IProfile profile, ResunetDAL.Interfaces.ISkill _skill) : IProfile
+public class Profile(ResunetDAL.Interfaces.IProfileDAL profile, ResunetDAL.Interfaces.ISkillDAL _skill) : IProfile
 {
     public async Task AddOrUpdate(ProfileModel model)
     {

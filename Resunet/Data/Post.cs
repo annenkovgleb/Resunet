@@ -2,7 +2,7 @@
 
 namespace Resunet.Data;
 
-public class Post(ResunetDAL.Interfaces.IPost _post) : IPost
+public class Post(ResunetDAL.Interfaces.IPostDAL _post) : IPost
 {
     public async Task<PostModel> GetPost(int postId)
         => await _post.GetPost(postId);

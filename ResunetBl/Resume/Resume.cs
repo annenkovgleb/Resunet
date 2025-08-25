@@ -3,7 +3,7 @@ using ResunetDAL.Models;
 
 namespace ResunetBl.Resume;
 
-public class Resume(IProfile profile) : IResume
+public class Resume(IProfileDAL profile) : IResume
 {
     public async Task<ResumeModel> Get(int profileId)
         => new ResumeModel

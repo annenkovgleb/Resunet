@@ -6,11 +6,11 @@ using ResunetBl.Exeption;
 namespace ResunetBl.Auth;
 
 public class Auth(
-    ResunetDAL.Interfaces.IAuth auth,
+    ResunetDAL.Interfaces.IAuthDAL auth,
     IEncrypt _encrypt,
     IWebCookie _webCookie,
     IDbSession _dbSession,
-    IUserToken userToken) : IAuth
+    IUserTokenDAL userToken) : IAuth
 {
     // IDbSession dbSession - получает BL уровня сессию, а Auth должен работь пожизненно.
     // Если один из параметров должен умирать каждый запрос, то и IAuthDAL должен умирать
