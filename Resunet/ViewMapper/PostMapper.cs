@@ -30,7 +30,7 @@ public static class PostMapper
         {
             yield return new PostContentModel()
             {
-                PostContentId = model.PostContentId,
+                PostContentId = model.ContentId,
                 ContentItemType = (int)model.ContentItemType,
                 Value = model.Value ?? "",
             };

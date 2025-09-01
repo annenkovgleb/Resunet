@@ -16,5 +16,5 @@ public class PostModel
 
     public DateTime Modified { get; set; }
 
-    public PostStatusEnum Status { get; set; }
+    public StatusEnum Status { get; set; }
 }

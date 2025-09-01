@@ -4,7 +4,7 @@
 
 <PageTitle>Моя статья</PageTitle>
 
-@if (post == null)
+@if (post is null)
 {
     <p><em>Идёт загрузка статьи...</em></p>
 }
@@ -21,10 +21,20 @@ else
 
     <div class="col-xs-12 mt-3">
         <input type="text" @bind="post.Title" class="text" placeholder="Название статьи" />
+
+        @if (errors.Errors.ContainsKey("Title"))
+        {
+            <div class="error">@errors.Errors["Title"]</div>
+        }
     </div>
 
     <div class="col-xs-12 mt-3">
         <textarea @bind="post.Intro" class="text" placeholder="Описание"></textarea>
+
+        @if (errors.Errors.ContainsKey("Intro"))
+        {
+            <div class="error">@errors.Errors["Intro"]</div>
+        }
     </div>
 
     <div class="col-md-12 mt-3">
@@ -67,13 +77,20 @@ else
     </div>
 
     <div class="col-6">
-        <button class="button" onclick="Save">Сохранить</button>
-    </div>
+    @if (saveSuccess)
+    {
+            <p class="success">Изменения успешно сохранены<p />
+            }
+            <button class="button" onclick="Save">Сохранить</button>
 
-    <div class="col-6 text-end">
-        <button class="button" onclick="AddPicture">Добавить картинку</button>
-    </div>
-}
+        </div>
+
+
+
+        <div class="col-6 text-end">
+            <button class="button" onclick="AddPicture">Добавить картинку</button>
+        </div>
+    }
 
 @code {
     [Parameter]
@@ -81,7 +98,11 @@ else
 
     private bool isLoading = false;
 
+    private bool saveSuccess = false;
+
     private PostData? post = null;
+
+    private ViewModels.ErrorsViewModel errors = new ViewModels.ErrorsViewModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -103,9 +124,26 @@ else
         if (post is null)
             return;
 
-        var result = await Http.PutAsJsonAsync("/profile/post", this.post);
- 
-        
+        errors = new ViewModels.ErrorsViewModel();
+        var result = await Http.PutAsJsonAsync<PostData>("/profile/post", this.post);
+
+        if (result is not null)
+        {
+            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var resultContent = (await result.Content.ReadFromJsonAsync<PostSaveSaccessResult>());
+
+                this.post.PostId = resultContent?.id;
+                this.saveSuccess = true;
+                this.StateHasChanged(); // для перерисовки фронта
+                await Task.Delay(1000);
+                this.saveSuccess = false;
+            }
+            else
+            {
+                errors = (await result.Content.ReadFromJsonAsync<ViewModels.ErrorsViewModel>());
+            }
+        }
     }
 
     public async Task UploadFile(InputFileChangeEventArgs value, ContentItem item)
@@ -119,7 +157,8 @@ else
             content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data"); // чтобы запрос не накрылся
             content.Add(new StreamContent(ms, (int)ms.Length), "image", value.File.Name);
             item.Value = await this.UploadImage(content); // загружает на сервер изображение, возвращает имя загруженного файла
-        };
+        }
+        ;
     }
 
     public async Task<string> UploadImage(MultipartFormDataContent content)
@@ -147,6 +186,11 @@ else
     private class PostImageResult
     {
         public string FileName { get; set; } = "";
+    }
+
+    class PostSaveSaccessResult
+    {
+        public int id { get; set; }
     }
 
     public class ContentItem

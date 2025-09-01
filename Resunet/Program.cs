@@ -25,7 +25,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<ResunetBl.Profile.IProfile, ResunetBl.Profile.Profile>();
 builder.Services.AddSingleton<IResume, Resume>();
 builder.Services.AddSingleton<ResunetBl.Profile.ISkill, ResunetBl.Profile.Skill>();
-builder.Services.AddSingleton<Resunet.Data.IPost, Resunet.Data.Post>();
+builder.Services.AddSingleton<ResunetBL.Data.IPost, ResunetBL.Data.Post>();
 
 builder.Services.AddMvc();
 

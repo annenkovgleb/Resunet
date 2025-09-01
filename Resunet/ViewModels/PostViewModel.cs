@@ -7,7 +7,7 @@ namespace Resunet.ViewModels
     {
         public enum ContentItemTypeEnum { Text, Image, Title }
 
-        public int? PostContentId { get; set; }
+        public int? ContentId { get; set; }
 
         public int ContentItemType { get; set; }
 
@@ -24,8 +24,8 @@ namespace Resunet.ViewModels
         [Required(ErrorMessage = "Intro is required")]
         public string? Intro { get; set; }
 
-        public List<PostContentItemViewModel> PostContentItems { get; set; } = new List<PostContentItemViewModel>();
+        public List<PostContentItemViewModel> ContentItems { get; set; } = new List<PostContentItemViewModel>();
 
-        public PostStatusEnum Status { get; set; }
+        public StatusEnum Status { get; set; }
     }
 }
