@@ -77,20 +77,21 @@ else
     </div>
 
     <div class="col-6">
-    @if (saveSuccess)
-    {
-            <p class="success">Изменения успешно сохранены<p />
-            }
-            <button class="button" onclick="Save">Сохранить</button>
+        @if (saveSuccess)
+        {
+            <p class="success">Изменения успешно сохранены</p>
+        }
+        <button class="button" onclick="Save">Сохранить</button>
 
-        </div>
+    </div>
 
 
+    <div class="col-6 text-end">
+        <button class="button" onclick="AddPicture">Добавить картинку</button>
+    </div>
+}
+ }
 
-        <div class="col-6 text-end">
-            <button class="button" onclick="AddPicture">Добавить картинку</button>
-        </div>
-    }
 
 @code {
     [Parameter]
